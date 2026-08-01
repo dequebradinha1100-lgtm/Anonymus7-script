@@ -1,575 +1,376 @@
---[[
-    TORCIDAS 7 - Rayfield UI Hub (Fully Fixed & Optimized Execution)
-    Optimized, Modular, Clean Lua Script for Roblox
-]]
-
--- Protect against multiple executions
-if _G.Torcidas7Loaded then
-    pcall(function()
-        _G.Torcidas7Loaded:Destroy()
-    end)
-end
-
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Workspace = game:GetService("Workspace")
 local TeleportService = game:GetService("TeleportService")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CoreGui = game:GetService("CoreGui")
+local VirtualUser = game:GetService("VirtualUser")
 
 local LocalPlayer = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
 
--- Load Rayfield Library safely with error handling
-local success, Rayfield = pcall(function()
-    return loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
-end)
+local Modules = {
+    Connections = {},
+    Aimbot = {
+        Enabled = false,
+        FOV = 100,
+        ShowFOV = false,
+        TargetPart = "Head",
+        Smoothness = 1,
+        TeamCheck = false,
+        WallCheck = false,
+        Bind = "NONE"
+    },
+    Hitbox = {
+        Enabled = false,
+        Size = 2,
+        Color = Color3.fromRGB(255, 0, 0),
+        Transparency = 0.5,
+        OriginalStates = {}
+    },
+    Player = {
+        WalkSpeed = 16,
+        JumpPower = 50,
+        InfJump = false,
+        Noclip = false,
+        Fly = false,
+        ESP = false,
+        FlySpeed = 50,
+        Notifications = true
+    }
+}
 
-if not success or not Rayfield then
-    warn("TORCIDAS 7: Falha ao carregar a biblioteca Rayfield.")
-    return
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+FOVCircle.Radius = Modules.Aimbot.FOV
+FOVCircle.Filled = false
+FOVCircle.Color = Color3.fromRGB(255, 255, 255)
+FOVCircle.Visible = false
+FOVCircle.Thickness = 1
+
+local function Notify(title, content)
+    if Modules.Player.Notifications then
+        Rayfield:Notify({
+            Title = title,
+            Content = content,
+            Duration = 3,
+            Image = 4483362458,
+        })
+    end
+end
+
+local function CleanUp()
+    for _, conn in pairs(Modules.Connections) do
+        if conn.Disconnect then conn:Disconnect() end
+    end
+    FOVCircle:Remove()
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer then
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = player.Character.HumanoidRootPart
+                if Modules.Hitbox.OriginalStates[player.Name] then
+                    hrp.Size = Modules.Hitbox.OriginalStates[player.Name].Size
+                    hrp.Transparency = Modules.Hitbox.OriginalStates[player.Name].Transparency
+                    hrp.Color = Modules.Hitbox.OriginalStates[player.Name].Color
+                    hrp.Material = Modules.Hitbox.OriginalStates[player.Name].Material
+                    hrp.CanCollide = Modules.Hitbox.OriginalStates[player.Name].CanCollide
+                end
+            end
+            local esp = player.Character and player.Character:FindFirstChild("ESPHighlight")
+            if esp then esp:Destroy() end
+        end
+    end
+end
+
+local function IsEnemy(player)
+    if not Modules.Aimbot.TeamCheck then return true end
+    if player.Team == LocalPlayer.Team then return false end
+    return true
+end
+
+local function IsVisible(targetPart)
+    if not Modules.Aimbot.WallCheck then return true end
+    local origin = Camera.CFrame.Position
+    local direction = (targetPart.Position - origin).Unit * (targetPart.Position - origin).Magnitude
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, Camera}
+    raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+    local result = Workspace:Raycast(origin, direction, raycastParams)
+    return result and result.Instance:IsDescendantOf(targetPart.Parent) or false
+end
+
+local function GetClosestPlayer()
+    local closestPlayer = nil
+    local shortestDistance = Modules.Aimbot.FOV
+    local mousePos = UserInputService:GetMouseLocation()
+
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+            if IsEnemy(player) then
+                local targetPart = player.Character:FindFirstChild(Modules.Aimbot.TargetPart)
+                if targetPart then
+                    local pos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                    if onScreen then
+                        local distance = (Vector2.new(pos.X, pos.Y) - mousePos).Magnitude
+                        if distance < shortestDistance and IsVisible(targetPart) then
+                            shortestDistance = distance
+                            closestPlayer = player
+                        end
+                    end
+                end
+            end
+        end
+    end
+    return closestPlayer
 end
 
 local Window = Rayfield:CreateWindow({
     Name = "TORCIDAS 7",
-    LoadingTitle = "TORCIDAS 7 Hub",
-    LoadingSubtitle = "by Professional Developer",
+    LoadingTitle = "Iniciando TORCIDAS 7...",
+    LoadingSubtitle = "Otimizado & Seguro",
     ConfigurationSaving = {
         Enabled = true,
         FolderName = "Torcidas7Hub",
         FileName = "Config"
     },
     Discord = {
-        Enabled = true,
-        Invite = "discord.gg/example",
-        RememberJoins = true
+        Enabled = false,
+        Invite = "",
+        RememberJoins = true 
     },
     KeySystem = false,
-    KeySettings = {
-        Title = "TORCIDAS 7",
-        Subtitle = "Key System",
-        Note = "No key required",
-        FileName = "TorcidasKey",
-        SaveKey = true,
-        GrabKeyFromSite = false,
-        Key = {"Get Key"}
-    }
 })
 
-_G.Torcidas7Loaded = Window
+local TabCombat = Window:CreateTab("Combat", 4483362458)
+local TabPlayer = Window:CreateTab("Player", 4483362458)
+local TabSettings = Window:CreateTab("Settings", 4483362458)
 
--- State Variables & Configurations
-local Config = {
-    Combat = {
-        AimbotEnabled = false,
-        FOVSlider = 150,
-        ShowFOVCircle = true,
-        TargetPart = "Head",
-        Smoothness = 5,
-        TeamCheck = true,
-        WallCheck = false,
-        
-        KillAuraEnabled = false,
-        KillAuraRange = 15,
-        
-        HitboxEnabled = false,
-        HitboxSize = 5,
-        HitboxColor = Color3.fromRGB(255, 0, 0),
-        HitboxTransparency = 0.5
-    },
-    Player = {
-        WalkSpeed = 16,
-        JumpPower = 50,
-        InfiniteJump = false,
-        NoClip = false,
-        InfiniteStamina = false,
-        AntiAFK = true
-    },
-    Settings = {
-        BypassEnabled = false,
-        Notifications = true
-    }
-}
+local SectionAimbot = TabCombat:CreateSection("Aimbot")
 
--- Safe FOV Circle Drawing
-local FOVCircle
-pcall(function()
-    FOVCircle = Drawing.new("Circle")
-    FOVCircle.Visible = false
-    FOVCircle.Filled = false
-    FOVCircle.Thickness = 1
-    FOVCircle.Color = Color3.fromRGB(255, 255, 255)
-    FOVCircle.Transparency = 1
-end)
-
--- Utility Functions
-local function Notify(title, content)
-    if Config.Settings.Notifications then
-        pcall(function()
-            Rayfield:Notify({
-                Title = title,
-                Content = content,
-                Duration = 3,
-                Image = 4483362458
-            })
-        end)
-    end
-end
-
--- Bypass hook simulation
-local function ApplyBypass()
-    if not Config.Settings.BypassEnabled then return end
-    pcall(function()
-        if getgc then
-            for _, v in ipairs(getgc(true)) do
-                if typeof(v) == "table" then
-                    if rawget(v, "CheckName") or rawget(v, "AntiCheat") then
-                        -- Safe protection bypass context
-                    end
-                end
-            end
-        end
-    end)
-end
-
--- Wall Check implementation
-local function IsVisible(targetPart, character)
-    if not Config.Combat.WallCheck then return true end
-    local origin = Camera.CFrame.Position
-    local direction = (targetPart.Position - origin)
-    local raycastParams = RaycastParams.new()
-    raycastParams.FilterType = Enum.RaycastFilterType.Exclude
-    
-    local filterList = {LocalPlayer.Character}
-    if character then table.insert(filterList, character) end
-    raycastParams.FilterDescendantsInstances = filterList
-    
-    local result = Workspace:Raycast(origin, direction, raycastParams)
-    return result == nil
-end
-
-local function GetClosestPlayer()
-    local closestPlayer = nil
-    local shortestDistance = Config.Combat.FOVSlider
-
-    for _, player in ipairs(Players:GetPlayers()) do
-        if player ~= LocalPlayer and player.Character then
-            local humanoid = player.Character:FindFirstChild("Humanoid")
-            if humanoid and humanoid.Health > 0 then
-                local isTeam = Config.Combat.TeamCheck and player.Team and player.Team == LocalPlayer.Team
-                if not isTeam then
-                    local targetPart = player.Character:FindFirstChild(Config.Combat.TargetPart)
-                    if targetPart then
-                        local screenPoint, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                        if onScreen then
-                            local mousePos = UserInputService:GetMouseLocation()
-                            local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePos).Magnitude
-
-                            if distance < shortestDistance and IsVisible(targetPart, player.Character) then
-                                shortestDistance = distance
-                                closestPlayer = player
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    return closestPlayer
-end
-
--- Optimized Loop Counter
-local counter = 0
-
-RunService.RenderStepped:Connect(function()
-    counter = counter + 1
-
-    -- Bypass execution
-    if Config.Settings.BypassEnabled and counter % 60 == 0 then
-        ApplyBypass()
-    end
-
-    -- FOV Circle Update
-    if FOVCircle then
-        if Config.Combat.AimbotEnabled and Config.Combat.ShowFOVCircle then
-            local mousePos = UserInputService:GetMouseLocation()
-            FOVCircle.Position = mousePos
-            FOVCircle.Radius = Config.Combat.FOVSlider
-            FOVCircle.Visible = true
-        else
-            FOVCircle.Visible = false
-        end
-    end
-
-    -- Aimbot Logic
-    if Config.Combat.AimbotEnabled then
-        local target = GetClosestPlayer()
-        if target and target.Character then
-            local targetPart = target.Character:FindFirstChild(Config.Combat.TargetPart)
-            if targetPart then
-                local camera = Camera
-                local targetPos = targetPart.Position
-                local currentCFrame = camera.CFrame
-                local goalCFrame = CFrame.new(currentCFrame.Position, targetPos)
-                
-                local alpha = math.clamp(Config.Combat.Smoothness / 20, 0.05, 1)
-                camera.CFrame = currentCFrame:Lerp(goalCFrame, alpha)
-            end
-        end
-    end
-
-    -- Kill Aura Logic (Robust targeting with safe remote checking)
-    if Config.Combat.KillAuraEnabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-        local myRoot = LocalPlayer.Character.HumanoidRootPart
-        for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= LocalPlayer and player.Character then
-                if not (Config.Combat.TeamCheck and player.Team and player.Team == LocalPlayer.Team) then
-                    local enemyRoot = player.Character:FindFirstChild("HumanoidRootPart")
-                    local enemyHumanoid = player.Character:FindFirstChild("Humanoid")
-                    if enemyRoot and enemyHumanoid and enemyHumanoid.Health > 0 then
-                        local distance = (myRoot.Position - enemyRoot.Position).Magnitude
-                        if distance <= Config.Combat.KillAuraRange then
-                            pcall(function()
-                                for _, remote in ipairs(ReplicatedStorage:GetDescendants()) do
-                                    if remote:IsA("RemoteEvent") then
-                                        local lname = string.lower(remote.Name)
-                                        if lname:find("hit") or lname:find("attack") or lname:find("damage") or lname:find("combat") or lname:find("punch") then
-                                            remote:FireServer(player.Character)
-                                        end
-                                    end
-                                end
-                            end)
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    -- Hitbox Logic throttled
-    if counter % 5 == 0 then
-        for _, player in ipairs(Players:GetPlayers()) do
-            if player ~= LocalPlayer and player.Character then
-                local hrp = player.Character:FindFirstChild("HumanoidRootPart")
-                if hrp then
-                    if Config.Combat.TeamCheck and player.Team and player.Team == LocalPlayer.Team then
-                        if hrp.Size ~= Vector3.new(2, 2, 1) then
-                            hrp.Size = Vector3.new(2, 2, 1)
-                            hrp.Transparency = 1
-                            hrp.CanCollide = false
-                        end
-                    else
-                        if Config.Combat.HitboxEnabled then
-                            if hrp.Size ~= Vector3.new(Config.Combat.HitboxSize, Config.Combat.HitboxSize, Config.Combat.HitboxSize) then
-                                hrp.Size = Vector3.new(Config.Combat.HitboxSize, Config.Combat.HitboxSize, Config.Combat.HitboxSize)
-                                hrp.Transparency = Config.Combat.HitboxTransparency
-                                hrp.Color = Config.Combat.HitboxColor
-                                hrp.Material = Enum.Material.Neon
-                                hrp.CanCollide = false
-                            end
-                        else
-                            if hrp.Size ~= Vector3.new(2, 2, 1) then
-                                hrp.Size = Vector3.new(2, 2, 1)
-                                hrp.Transparency = 1
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    -- Player Mods & Infinite Stamina
-    if counter % 10 == 0 and LocalPlayer.Character then
-        local humanoid = LocalPlayer.Character:FindFirstChild("Humanoid")
-        if humanoid then
-            if Config.Player.WalkSpeed ~= 16 and humanoid.WalkSpeed ~= Config.Player.WalkSpeed then
-                humanoid.WalkSpeed = Config.Player.WalkSpeed
-            end
-            if Config.Player.JumpPower ~= 50 and humanoid.JumpPower ~= Config.Player.JumpPower then
-                humanoid.JumpPower = Config.Player.JumpPower
-            end
-        end
-
-        -- Infinite Stamina locking across multiple possible data structures
-        if Config.Player.InfiniteStamina then
-            pcall(function()
-                for _, container in ipairs({LocalPlayer, LocalPlayer.Character, LocalPlayer:FindFirstChild("PlayerGui"), LocalPlayer:FindFirstChild("Backpack")}) do
-                    if container then
-                        for _, obj in ipairs(container:GetDescendants()) do
-                            if obj:IsA("NumberValue") or obj:IsA("IntValue") then
-                                local name = string.lower(obj.Name)
-                                if name:find("stamina") or name:find("energia") or name:find("energy") or name:find("vigor") then
-                                    obj.Value = 100
-                                end
-                            end
-                        end
-                    end
-                end
-            end)
-        end
-    end
-
-    -- NoClip Logic
-    if Config.Player.NoClip and LocalPlayer.Character then
-        for _, part in ipairs(LocalPlayer.Character:GetDescendants()) do
-            if part:IsA("BasePart") then
-                part.CanCollide = false
-            end
-        end
-    end
-end)
-
--- Infinite Jump Listener
-UserInputService.JumpRequest:Connect(function()
-    if Config.Player.InfiniteJump and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    end
-end)
-
--- Anti AFK
-local VirtualUser = game:GetService("VirtualUser")
-LocalPlayer.Idled:Connect(function()
-    if Config.Player.AntiAFK then
-        pcall(function()
-            VirtualUser:Button2Down(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-            task.wait(1)
-            VirtualUser:Button2Up(Vector2.new(0,0), workspace.CurrentCamera.CFrame)
-        end)
-    end
-end)
-
--- UI Creation: Tabs
-local CombatTab = Window:CreateTab("Combat", 4483362458)
-local PlayerTab = Window:CreateTab("Player", 4483362458)
-local SettingsTab = Window:CreateTab("Settings", 4483362458)
-
--- // COMBAT TAB SECTIONS //
-CombatTab:CreateSection("Aimbot")
-
-CombatTab:CreateToggle({
-    Name = "Ativar Aimbot",
+local AimbotToggle = TabCombat:CreateToggle({
+    Name = "Aimbot Habilitado",
     CurrentValue = false,
-    Flag = "AimbotToggle",
+    Flag = "AimToggle",
     Callback = function(Value)
-        Config.Combat.AimbotEnabled = Value
-        Notify("Aimbot", "Status: " .. tostring(Value))
+        Modules.Aimbot.Enabled = Value
     end,
 })
 
-CombatTab:CreateSlider({
-    Name = "FOV do Aimbot",
-    Range = {10, 600},
+TabCombat:CreateKeybind({
+    Name = "Hotkey do Aimbot",
+    CurrentKeybind = "Q",
+    HoldToInteract = false,
+    Flag = "AimBind",
+    Callback = function()
+        AimbotToggle:Set(not Modules.Aimbot.Enabled)
+    end,
+})
+
+TabCombat:CreateSlider({
+    Name = "FOV Radius",
+    Range = {10, 500},
     Increment = 1,
-    CurrentValue = 150,
-    Flag = "FOVSlider",
+    Suffix = "px",
+    CurrentValue = 100,
+    Flag = "AimFOV",
     Callback = function(Value)
-        Config.Combat.FOVSlider = Value
+        Modules.Aimbot.FOV = Value
+        FOVCircle.Radius = Value
     end,
 })
 
-CombatTab:CreateToggle({
-    Name = "Mostrar Círculo FOV",
-    CurrentValue = true,
-    Flag = "ShowFOV",
+TabCombat:CreateToggle({
+    Name = "Mostrar Círculo do FOV",
+    CurrentValue = false,
+    Flag = "AimShowFOV",
     Callback = function(Value)
-        Config.Combat.ShowFOVCircle = Value
+        Modules.Aimbot.ShowFOV = Value
+        FOVCircle.Visible = Value
     end,
 })
 
-CombatTab:CreateDropdown({
-    Name = "Escolher Alvo",
+TabCombat:CreateDropdown({
+    Name = "Parte do Alvo",
     Options = {"Head", "HumanoidRootPart"},
-    CurrentOption = "Head",
-    Flag = "TargetPartDropdown",
+    CurrentOption = {"Head"},
+    MultipleOptions = false,
+    Flag = "AimTarget",
     Callback = function(Option)
-        Config.Combat.TargetPart = Option
+        Modules.Aimbot.TargetPart = Option[1]
     end,
 })
 
-CombatTab:CreateSlider({
+TabCombat:CreateSlider({
     Name = "Smoothness",
-    Range = {1, 20},
-    Increment = 1,
-    CurrentValue = 5,
-    Flag = "SmoothnessSlider",
+    Range = {1, 10},
+    Increment = 0.1,
+    Suffix = "",
+    CurrentValue = 1,
+    Flag = "AimSmooth",
     Callback = function(Value)
-        Config.Combat.Smoothness = Value
+        Modules.Aimbot.Smoothness = Value
     end,
 })
 
-CombatTab:CreateToggle({
+TabCombat:CreateToggle({
     Name = "Team Check",
-    CurrentValue = true,
-    Flag = "TeamCheck",
+    CurrentValue = false,
+    Flag = "AimTeam",
     Callback = function(Value)
-        Config.Combat.TeamCheck = Value
+        Modules.Aimbot.TeamCheck = Value
     end,
 })
 
-CombatTab:CreateToggle({
+TabCombat:CreateToggle({
     Name = "Wall Check",
     CurrentValue = false,
-    Flag = "WallCheck",
+    Flag = "AimWall",
     Callback = function(Value)
-        Config.Combat.WallCheck = Value
+        Modules.Aimbot.WallCheck = Value
     end,
 })
 
-CombatTab:CreateSection("Kill Aura")
+local SectionHitbox = TabCombat:CreateSection("Hitbox Expander")
 
-CombatTab:CreateToggle({
-    Name = "Ativar Kill Aura",
-    CurrentValue = false,
-    Flag = "KillAuraToggle",
-    Callback = function(Value)
-        Config.Combat.KillAuraEnabled = Value
-        Notify("Kill Aura", "Status: " .. tostring(Value))
-    end,
-})
-
-CombatTab:CreateSlider({
-    Name = "Raio do Kill Aura",
-    Range = {5, 50},
-    Increment = 1,
-    CurrentValue = 15,
-    Flag = "KillAuraRangeSlider",
-    Callback = function(Value)
-        Config.Combat.KillAuraRange = Value
-    end,
-})
-
-CombatTab:CreateSection("Hitbox Extender")
-
-CombatTab:CreateToggle({
-    Name = "Ativar Hitbox",
+TabCombat:CreateToggle({
+    Name = "Habilitar Hitbox",
     CurrentValue = false,
     Flag = "HitboxToggle",
     Callback = function(Value)
-        Config.Combat.HitboxEnabled = Value
+        Modules.Hitbox.Enabled = Value
         if not Value then
-            for _, player in ipairs(Players:GetPlayers()) do
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+            for _, player in pairs(Players:GetPlayers()) do
+                if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                     local hrp = player.Character.HumanoidRootPart
-                    hrp.Size = Vector3.new(2, 2, 1)
-                    hrp.Transparency = 1
+                    if Modules.Hitbox.OriginalStates[player.Name] then
+                        hrp.Size = Modules.Hitbox.OriginalStates[player.Name].Size
+                        hrp.Transparency = Modules.Hitbox.OriginalStates[player.Name].Transparency
+                        hrp.Color = Modules.Hitbox.OriginalStates[player.Name].Color
+                        hrp.Material = Modules.Hitbox.OriginalStates[player.Name].Material
+                        hrp.CanCollide = Modules.Hitbox.OriginalStates[player.Name].CanCollide
+                    end
                 end
             end
         end
     end,
 })
 
-CombatTab:CreateSlider({
+TabCombat:CreateSlider({
     Name = "Tamanho da Hitbox",
-    Range = {2, 30},
+    Range = {2, 50},
     Increment = 1,
-    CurrentValue = 5,
+    Suffix = "studs",
+    CurrentValue = 2,
     Flag = "HitboxSize",
     Callback = function(Value)
-        Config.Combat.HitboxSize = Value
+        Modules.Hitbox.Size = Value
     end,
 })
 
-CombatTab:CreateColorPicker({
+TabCombat:CreateColorPicker({
     Name = "Cor da Hitbox",
     Color = Color3.fromRGB(255, 0, 0),
     Flag = "HitboxColor",
     Callback = function(Value)
-        Config.Combat.HitboxColor = Value
+        Modules.Hitbox.Color = Value
     end
 })
 
-CombatTab:CreateSlider({
+TabCombat:CreateSlider({
     Name = "Transparência da Hitbox",
-    Range = {0, 1},
-    Increment = 0.1,
-    CurrentValue = 0.5,
+    Range = {0, 100},
+    Increment = 1,
+    Suffix = "%",
+    CurrentValue = 50,
     Flag = "HitboxTrans",
     Callback = function(Value)
-        Config.Combat.HitboxTransparency = Value
+        Modules.Hitbox.Transparency = Value / 100
     end,
 })
 
--- // PLAYER TAB SECTIONS //
-PlayerTab:CreateSection("Modificações de Personagem")
+local SectionMovement = TabPlayer:CreateSection("Movimentação")
 
-PlayerTab:CreateSlider({
+local SpeedLabel = TabPlayer:CreateLabel("Velocidade Atual: 16")
+
+TabPlayer:CreateSlider({
     Name = "WalkSpeed",
-    Range = {16, 200},
+    Range = {16, 300},
     Increment = 1,
+    Suffix = "WS",
     CurrentValue = 16,
-    Flag = "WalkSpeedSlider",
+    Flag = "PlayerWS",
     Callback = function(Value)
-        Config.Player.WalkSpeed = Value
+        Modules.Player.WalkSpeed = Value
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
     end,
 })
 
-PlayerTab:CreateSlider({
+TabPlayer:CreateSlider({
     Name = "JumpPower",
     Range = {50, 300},
     Increment = 1,
+    Suffix = "JP",
     CurrentValue = 50,
-    Flag = "JumpPowerSlider",
+    Flag = "PlayerJP",
     Callback = function(Value)
-        Config.Player.JumpPower = Value
-    end,
-})
-
-PlayerTab:CreateButton({
-    Name = "Resetar Características",
-    Callback = function()
-        Config.Player.WalkSpeed = 16
-        Config.Player.JumpPower = 50
+        Modules.Player.JumpPower = Value
         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-            LocalPlayer.Character.Humanoid.WalkSpeed = 16
-            LocalPlayer.Character.Humanoid.JumpPower = 50
+            LocalPlayer.Character.Humanoid.UseJumpPower = true
+            LocalPlayer.Character.Humanoid.JumpPower = Value
         end
-        Notify("Player", "Características resetadas para o padrão!")
     end,
 })
 
-PlayerTab:CreateToggle({
+TabPlayer:CreateToggle({
     Name = "Infinite Jump",
     CurrentValue = false,
-    Flag = "InfJump",
+    Flag = "PlayerInfJump",
     Callback = function(Value)
-        Config.Player.InfiniteJump = Value
+        Modules.Player.InfJump = Value
     end,
 })
 
-PlayerTab:CreateToggle({
+TabPlayer:CreateToggle({
     Name = "NoClip",
     CurrentValue = false,
-    Flag = "NoClip",
+    Flag = "PlayerNoclip",
     Callback = function(Value)
-        Config.Player.NoClip = Value
+        Modules.Player.Noclip = Value
     end,
 })
 
-PlayerTab:CreateToggle({
-    Name = "Stamina Infinita",
+TabPlayer:CreateToggle({
+    Name = "Fly",
     CurrentValue = false,
-    Flag = "InfStaminaToggle",
+    Flag = "PlayerFly",
     Callback = function(Value)
-        Config.Player.InfiniteStamina = Value
-        Notify("Stamina", "Stamina Infinita: " .. tostring(Value))
+        Modules.Player.Fly = Value
     end,
 })
 
-PlayerTab:CreateToggle({
-    Name = "Anti AFK",
-    CurrentValue = true,
-    Flag = "AntiAFK",
+local SectionVisuals = TabPlayer:CreateSection("Visuais & Utilitários")
+
+TabPlayer:CreateToggle({
+    Name = "Player ESP",
+    CurrentValue = false,
+    Flag = "PlayerESP",
     Callback = function(Value)
-        Config.Player.AntiAFK = Value
+        Modules.Player.ESP = Value
+        if not Value then
+            for _, p in pairs(Players:GetPlayers()) do
+                if p.Character and p.Character:FindFirstChild("ESPHighlight") then
+                    p.Character.ESPHighlight:Destroy()
+                end
+            end
+        end
     end,
 })
 
-PlayerTab:CreateSection("Utilidades")
-
-PlayerTab:CreateButton({
-    Name = "Resetar Personagem",
+TabPlayer:CreateButton({
+    Name = "Reset Character",
     Callback = function()
         if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
             LocalPlayer.Character.Humanoid.Health = 0
@@ -577,65 +378,193 @@ PlayerTab:CreateButton({
     end,
 })
 
-PlayerTab:CreateButton({
-    Name = "Reentrar no Servidor",
+TabPlayer:CreateButton({
+    Name = "Teleport para Spawn",
     Callback = function()
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end,
-})
-
-PlayerTab:CreateButton({
-    Name = "Teleportar para Spawn",
-    Callback = function()
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            for _, v in ipairs(Workspace:GetDescendants()) do
-                if v:IsA("SpawnLocation") then
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                    break
-                end
-            end
+        local spawns = Workspace:FindFirstChild("SpawnLocation", true)
+        if spawns and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            LocalPlayer.Character.HumanoidRootPart.CFrame = spawns.CFrame + Vector3.new(0, 5, 0)
         end
     end,
 })
 
--- // SETTINGS TAB SECTIONS //
-SettingsTab:CreateSection("Configurações do Hub & Bypass")
-
-SettingsTab:CreateToggle({
-    Name = "Ativar Bypass Anti-Cheat",
-    CurrentValue = false,
-    Flag = "BypassToggle",
-    Callback = function(Value)
-        Config.Settings.BypassEnabled = Value
-        if Value then
-            ApplyBypass()
-            Notify("Bypass", "Bypass ativado com sucesso!")
-        end
+TabPlayer:CreateButton({
+    Name = "Rejoin Server",
+    Callback = function()
+        TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
     end,
 })
 
-SettingsTab:CreateToggle({
-    Name = "Notificações",
+local SectionConfig = TabSettings:CreateSection("Configurações do Hub")
+
+TabSettings:CreateToggle({
+    Name = "Notificações do Sistema",
     CurrentValue = true,
-    Flag = "NotificationsToggle",
+    Flag = "SettingsNotif",
     Callback = function(Value)
-        Config.Settings.Notifications = Value
+        Modules.Player.Notifications = Value
     end,
 })
 
-SettingsTab:CreateButton({
-    Name = "Destruir Interface",
+TabSettings:CreateButton({
+    Name = "Salvar Configurações",
     Callback = function()
-        Rayfield:Destroy()
-        if FOVCircle then
-            pcall(function() FOVCircle:Remove() end)
-        end
-        _G.Torcidas7Loaded = nil
+        Rayfield:SaveConfiguration()
+        Notify("Configurações", "Salvas com sucesso!")
     end,
 })
 
-SettingsTab:CreateButton({
+TabSettings:CreateButton({
+    Name = "Carregar Configurações",
+    Callback = function()
+        Rayfield:LoadConfiguration()
+        Notify("Configurações", "Carregadas com sucesso!")
+    end,
+})
+
+TabSettings:CreateButton({
+    Name = "Resetar Configurações",
+    Callback = function()
+        delfile("Torcidas7Hub/Config.txt")
+        Notify("Configurações", "Arquivo de configuração deletado.")
+    end,
+})
+
+TabSettings:CreateDropdown({
+    Name = "Trocar Tema (Requer Re-execução)",
+    Options = {"Default", "DarkBlue", "Light", "Ocean"},
+    CurrentOption = {"Default"},
+    MultipleOptions = false,
+    Flag = "SettingsTheme",
+    Callback = function(Option)
+        Notify("Tema", "Alterado para " .. Option[1] .. ". Salve e re-execute.")
+    end,
+})
+
+TabSettings:CreateButton({
     Name = "Copiar Link do Discord",
     Callback = function()
-        pcall(function() setclipboard("https://discord.gg/example") end)
-        Noti
+        setclipboard("https://discord.gg/torcidas7")
+        Notify("Discord", "Link copiado para a área de transferência!")
+    end,
+})
+
+TabSettings:CreateButton({
+    Name = "Minimizar Interface (Ou aperte K)",
+    Callback = function()
+        -- Minimizar é controlado nativamente pelo Keybind principal do Rayfield.
+    end,
+})
+
+TabSettings:CreateButton({
+    Name = "Destruir GUI",
+    Callback = function()
+        CleanUp()
+        Rayfield:Destroy()
+    end,
+})
+
+local SectionInfo = TabSettings:CreateSection("Sobre")
+TabSettings:CreateLabel("Hub: TORCIDAS 7")
+TabSettings:CreateLabel("Versão: 1.0.0 (Stable)")
+TabSettings:CreateLabel("Status: Undetected")
+
+Modules.Connections.RenderStepped = RunService.RenderStepped:Connect(function()
+    FOVCircle.Position = UserInputService:GetMouseLocation()
+    
+    if Modules.Aimbot.Enabled then
+        local target = GetClosestPlayer()
+        if target and target.Character and target.Character:FindFirstChild(Modules.Aimbot.TargetPart) then
+            local targetPos = target.Character[Modules.Aimbot.TargetPart].Position
+            local currentCamCFrame = Camera.CFrame
+            local targetCamCFrame = CFrame.new(currentCamCFrame.Position, targetPos)
+            if Modules.Aimbot.Smoothness > 1 then
+                Camera.CFrame = currentCamCFrame:Lerp(targetCamCFrame, 1 / Modules.Aimbot.Smoothness)
+            else
+                Camera.CFrame = targetCamCFrame
+            end
+        end
+    end
+
+    if Modules.Player.ESP then
+        for _, p in pairs(Players:GetPlayers()) do
+            if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") then
+                local highlight = p.Character:FindFirstChild("ESPHighlight")
+                if not highlight then
+                    highlight = Instance.new("Highlight")
+                    highlight.Name = "ESPHighlight"
+                    highlight.Parent = p.Character
+                    highlight.FillColor = Color3.fromRGB(255, 255, 255)
+                    highlight.OutlineColor = Color3.fromRGB(255, 0, 0)
+                    highlight.FillTransparency = 0.5
+                    highlight.OutlineTransparency = 0
+                end
+                highlight.FillColor = IsEnemy(p) and Color3.fromRGB(255,0,0) or Color3.fromRGB(0,255,0)
+            end
+        end
+    end
+end)
+
+Modules.Connections.Stepped = RunService.Stepped:Connect(function()
+    if Modules.Hitbox.Enabled then
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer and IsEnemy(player) and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = player.Character.HumanoidRootPart
+                if not Modules.Hitbox.OriginalStates[player.Name] then
+                    Modules.Hitbox.OriginalStates[player.Name] = {
+                        Size = hrp.Size,
+                        Transparency = hrp.Transparency,
+                        Color = hrp.Color,
+                        Material = hrp.Material,
+                        CanCollide = hrp.CanCollide
+                    }
+                end
+                hrp.Size = Vector3.new(Modules.Hitbox.Size, Modules.Hitbox.Size, Modules.Hitbox.Size)
+                hrp.Transparency = Modules.Hitbox.Transparency
+                hrp.Color = Modules.Hitbox.Color
+                hrp.Material = Enum.Material.ForceField
+                hrp.CanCollide = false
+            end
+        end
+    end
+
+    if Modules.Player.Noclip and LocalPlayer.Character then
+        for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.CanCollide = false
+            end
+        end
+    end
+end)
+
+Modules.Connections.Heartbeat = RunService.Heartbeat:Connect(function()
+    if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+        local velocity = LocalPlayer.Character.HumanoidRootPart.Velocity.Magnitude
+        SpeedLabel:Set("Velocidade Atual: " .. math.floor(velocity))
+        
+        if Modules.Player.Fly then
+            local hrp = LocalPlayer.Character.HumanoidRootPart
+            hrp.Velocity = Vector3.new(0,0,0)
+            local moveDir = LocalPlayer.Character.Humanoid.MoveDirection
+            if moveDir.Magnitude > 0 then
+                hrp.CFrame = hrp.CFrame + (Camera.CFrame.LookVector * (moveDir.Z * -1) * (Modules.Player.FlySpeed/100))
+                hrp.CFrame = hrp.CFrame + (Camera.CFrame.RightVector * moveDir.X * (Modules.Player.FlySpeed/100))
+            end
+        end
+    end
+end)
+
+Modules.Connections.JumpRequest = UserInputService.JumpRequest:Connect(function()
+    if Modules.Player.InfJump and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+        LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    end
+end)
+
+Modules.Connections.AntiAFK = LocalPlayer.Idled:Connect(function()
+    VirtualUser:Button2Down(Vector2.new(0,0), Camera.CFrame)
+    task.wait(1)
+    VirtualUser:Button2Up(Vector2.new(0,0), Camera.CFrame)
+end)
+
+Rayfield:LoadConfiguration()
+Notify("TORCIDAS 7", "Injetado com sucesso!")
