@@ -1,7 +1,7 @@
---[[\
+--[[
     TORCIDAS 7 - Rayfield UI Hub (Fully Fixed & Optimized Execution)
     Optimized, Modular, Clean Lua Script for Roblox
-]]--
+]]
 
 -- Protect against multiple executions
 if _G.Torcidas7Loaded then
@@ -156,20 +156,19 @@ local function GetClosestPlayer()
         if player ~= LocalPlayer and player.Character then
             local humanoid = player.Character:FindFirstChild("Humanoid")
             if humanoid and humanoid.Health > 0 then
-                if Config.Combat.TeamCheck and player.Team and player.Team == LocalPlayer.Team then
-                    continue
-                end
+                local isTeam = Config.Combat.TeamCheck and player.Team and player.Team == LocalPlayer.Team
+                if not isTeam then
+                    local targetPart = player.Character:FindFirstChild(Config.Combat.TargetPart)
+                    if targetPart then
+                        local screenPoint, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                        if onScreen then
+                            local mousePos = UserInputService:GetMouseLocation()
+                            local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePos).Magnitude
 
-                local targetPart = player.Character:FindFirstChild(Config.Combat.TargetPart)
-                if targetPart then
-                    local screenPoint, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
-                    if onScreen then
-                        local mousePos = UserInputService:GetMouseLocation()
-                        local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePos).Magnitude
-
-                        if distance < shortestDistance and IsVisible(targetPart, player.Character) then
-                            shortestDistance = distance
-                            closestPlayer = player
+                            if distance < shortestDistance and IsVisible(targetPart, player.Character) then
+                                shortestDistance = distance
+                                closestPlayer = player
+                            end
                         end
                     end
                 end
@@ -639,207 +638,4 @@ SettingsTab:CreateButton({
     Name = "Copiar Link do Discord",
     Callback = function()
         pcall(function() setclipboard("https://discord.gg/example") end)
-        Notify("Discord", "Link copiado para a área de transferência! = Option
-    end,
-})
-
-CombatTab:CreateSlider({
-    Name = "Smoothness",
-    Range = {1, 20},
-    Increment = 1,
-    CurrentValue = 5,
-    Flag = "SmoothnessSlider",
-    Callback = function(Value)
-        Config.Combat.Smoothness = Value
-    end,
-})
-
-CombatTab:CreateToggle({
-    Name = "Team Check",
-    CurrentValue = true,
-    Flag = "TeamCheck",
-    Callback = function(Value)
-        Config.Combat.TeamCheck = Value
-    end,
-})
-
-CombatTab:CreateToggle({
-    Name = "Wall Check",
-    CurrentValue = false,
-    Flag = "WallCheck",
-    Callback = function(Value)
-        Config.Combat.WallCheck = Value
-    end,
-})
-
-local HitboxSection = CombatTab:CreateSection("Hitbox Extender")
-
-CombatTab:CreateToggle({
-    Name = "Ativar Hitbox",
-    CurrentValue = false,
-    Flag = "HitboxToggle",
-    Callback = function(Value)
-        Config.Combat.HitboxEnabled = Value
-        if not Value then
-            for _, player in ipairs(Players:GetPlayers()) do
-                if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
-                    local hrp = player.Character.HumanoidRootPart
-                    hrp.Size = Vector3.new(2, 2, 1)
-                    hrp.Transparency = 1
-                end
-            end
-        end
-    end,
-})
-
-CombatTab:CreateSlider({
-    Name = "Tamanho da Hitbox",
-    Range = {2, 30},
-    Increment = 1,
-    CurrentValue = 5,
-    Flag = "HitboxSize",
-    Callback = function(Value)
-        Config.Combat.HitboxSize = Value
-    end,
-})
-
-CombatTab:CreateColorPicker({
-    Name = "Cor da Hitbox",
-    Color = Color3.fromRGB(255, 0, 0),
-    Flag = "HitboxColor",
-    Callback = function(Value)
-        Config.Combat.HitboxColor = Value
-    end
-})
-
-CombatTab:CreateSlider({
-    Name = "Transparência da Hitbox",
-    Range = {0, 1},
-    Increment = 0.1,
-    CurrentValue = 0.5,
-    Flag = "HitboxTrans",
-    Callback = function(Value)
-        Config.Combat.HitboxTransparency = Value
-    end,
-})
-
--- // PLAYER TAB SECTIONS //
-local PlayerSection = PlayerTab:CreateSection("Modificações de Personagem")
-
-PlayerTab:CreateSlider({
-    Name = "WalkSpeed",
-    Range = {16, 200},
-    Increment = 1,
-    CurrentValue = 16,
-    Flag = "WalkSpeedSlider",
-    Callback = function(Value)
-        Config.Player.WalkSpeed = Value
-    end,
-})
-
-PlayerTab:CreateSlider({
-    Name = "JumpPower",
-    Range = {50, 300},
-    Increment = 1,
-    CurrentValue = 50,
-    Flag = "JumpPowerSlider",
-    Callback = function(Value)
-        Config.Player.JumpPower = Value
-    end,
-})
-
-PlayerTab:CreateToggle({
-    Name = "Infinite Jump",
-    CurrentValue = false,
-    Flag = "InfJump",
-    Callback = function(Value)
-        Config.Player.InfiniteJump = Value
-    end,
-})
-
-PlayerTab:CreateToggle({
-    Name = "NoClip",
-    CurrentValue = false,
-    Flag = "NoClip",
-    Callback = function(Value)
-        Config.Player.NoClip = Value
-    end,
-})
-
-PlayerTab:CreateToggle({
-    Name = "Anti AFK",
-    CurrentValue = true,
-    Flag = "AntiAFK",
-    Callback = function(Value)
-        Config.Player.AntiAFK = Value
-    end,
-})
-
-local UtilitiesSection = PlayerTab:CreateSection("Utilidades")
-
-PlayerTab:CreateButton({
-    Name = "Resetar Personagem",
-    Callback = function()
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
-            LocalPlayer.Character.Humanoid.Health = 0
-        end
-    end,
-})
-
-PlayerTab:CreateButton({
-    Name = "Reentrar no Servidor",
-    Callback = function()
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-    end,
-})
-
-PlayerTab:CreateButton({
-    Name = "Teleportar para Spawn",
-    Callback = function()
-        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
-            for _, v in ipairs(Workspace:GetDescendants()) do
-                if v:IsA("SpawnLocation") then
-                    LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame + Vector3.new(0, 3, 0)
-                    break
-                end
-            end
-        end
-    end,
-})
-
--- // SETTINGS TAB SECTIONS //
-local SettingsSection = SettingsTab:CreateSection("Configurações do Hub")
-
-SettingsTab:CreateToggle({
-    Name = "Notificações",
-    CurrentValue = true,
-    Flag = "NotificationsToggle",
-    Callback = function(Value)
-        Config.Settings.Notifications = Value
-    end,
-})
-
-SettingsTab:CreateButton({
-    Name = "Destruir Interface",
-    Callback = function()
-        Rayfield:Destroy()
-        if FOVCircle then
-            FOVCircle:Remove()
-        end
-        _G.Torcidas7Loaded = nil
-    end,
-})
-
-SettingsTab:CreateButton({
-    Name = "Copiar Link do Discord",
-    Callback = function()
-        setclipboard("https://discord.gg/example")
-        Notify("Discord", "Link copiado para a área de transferência!")
-    end,
-})
-
-SettingsTab:CreateParagraph({Title = "TORCIDAS 7 Hub", Content = "Versão: 1.0.2 (Otimizada contra travamentos)\nCriado com padrões profissionais para Roblox."})
-
--- Final Initialization
-Rayfield:LoadConfiguration()
-Notify("TORCIDAS 7", "Hub otimizado carregado com sucesso!")
+        Noti
