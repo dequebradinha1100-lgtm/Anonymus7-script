@@ -26,6 +26,11 @@ local Modules = {
         Enabled = false,
         Range = 15
     },
+    AutoKnock = {
+        Enabled = false,
+        Range = 10,
+        Delay = 0.05
+    },
     Hitbox = {
         Enabled = false,
         Size = 2,
@@ -96,7 +101,6 @@ local function GetClosestPlayer(fovLimit, targetPartName)
     return closestPlayer
 end
 
--- Limpeza total ao destruir a GUI
 local function CleanUp()
     for name, conn in pairs(Modules.Connections) do
         if conn and conn.Disconnect then
@@ -109,12 +113,12 @@ end
 local Window = Rayfield:CreateWindow({
     Name = "TORCIDAS 7",
     LoadingTitle = "Iniciando...",
-    LoadingSubtitle = "Script Combat & Visuals",
+    LoadingSubtitle = "Torcidas Online Edition",
     ConfigurationSaving = { Enabled = false },
     KeySystem = false,
 })
 
--- ABAS DO SCRIPT
+-- ABAS
 local TabCombat = Window:CreateTab("Combat", 4483362458)
 local TabPlayer = Window:CreateTab("Player", 4483362458)
 local TabESP = Window:CreateTab("ESP", 4483362458)
@@ -123,6 +127,25 @@ local TabSettings = Window:CreateTab("Settings", 4483362458)
 ----------------------------------------------------
 -- ABA 1: COMBAT
 ----------------------------------------------------
+TabCombat:CreateSection("Auto Nocautear (Torcidas Online)")
+
+TabCombat:CreateToggle({
+    Name = "Habilitar Auto Nocautear (Soco)",
+    CurrentValue = false,
+    Flag = "AutoKnockToggle",
+    Callback = function(Value) Modules.AutoKnock.Enabled = Value end,
+})
+
+TabCombat:CreateSlider({
+    Name = "Distância do Nocaute (Studs)",
+    Range = {3, 30},
+    Increment = 1,
+    Suffix = "studs",
+    CurrentValue = 10,
+    Flag = "AutoKnockRange",
+    Callback = function(Value) Modules.AutoKnock.Range = Value end,
+})
+
 TabCombat:CreateSection("Aimbot")
 
 TabCombat:CreateToggle({
@@ -211,10 +234,10 @@ TabCombat:CreateSlider({
 ----------------------------------------------------
 -- ABA 2: PLAYER
 ----------------------------------------------------
-TabPlayer:CreateSection("Movimentação")
+TabPlayer:CreateSection("Movimentação Permanentes")
 
 TabPlayer:CreateSlider({
-    Name = "WalkSpeed",
+    Name = "WalkSpeed (Não Reseta ao Morrer)",
     Range = {16, 300},
     Increment = 1,
     CurrentValue = 16,
@@ -385,8 +408,56 @@ TabSettings:CreateButton({
 })
 
 ----------------------------------------------------
--- LOOPS E CONEXÕES PRINCIPAIS
+-- LOOPS E SISTEMAS AUTOMÁTICOS
 ----------------------------------------------------
+
+-- Mantém a Velocidade fixa se o jogador morrer ou renascer
+LocalPlayer.CharacterAdded:Connect(function(newChar)
+    local hum = newChar:WaitForChild("Humanoid", 5)
+    if hum then
+        task.wait(0.2)
+        hum.WalkSpeed = Modules.Player.WalkSpeed
+        hum.UseJumpPower = true
+        hum.JumpPower = Modules.Player.JumpPower
+    end
+end)
+
+-- Loop Auto Nocautear (Soco)
+task.spawn(function()
+    while task.wait(Modules.AutoKnock.Delay) do
+        if Modules.AutoKnock.Enabled and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            local myHrp = LocalPlayer.Character.HumanoidRootPart
+            local char = LocalPlayer.Character
+            
+            -- Procura o Soco na Backpack ou na Mão
+            local punchTool = char:FindFirstChild("Soco") or char:FindFirstChild("Punch") or char:FindFirstChildOfClass("Tool")
+            if not punchTool then
+                local backpack = LocalPlayer:FindFirstChild("Backpack")
+                if backpack then
+                    punchTool = backpack:FindFirstChild("Soco") or backpack:FindFirstChild("Punch") or backpack:FindFirstChildOfClass("Tool")
+                    if punchTool then
+                        punchTool.Parent = char -- Equipa o soco automaticamente
+                    end
+                end
+            end
+
+            for _, player in pairs(Players:GetPlayers()) do
+                if player ~= LocalPlayer and IsEnemy(player) and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid") then
+                    if player.Character.Humanoid.Health > 0 then
+                        local targetHrp = player.Character.HumanoidRootPart
+                        local dist = (myHrp.Position - targetHrp.Position).Magnitude
+                        
+                        if dist <= Modules.AutoKnock.Range then
+                            if punchTool then
+                                punchTool:Activate()
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
 
 -- Loop Kill Aura
 task.spawn(function()
@@ -409,13 +480,18 @@ task.spawn(function()
     end
 end)
 
--- Loop Render (Aimbot, Fly & Auto-Stand)
+-- Loop RenderStepped (Aimbot, Fly, Auto-Stand & Trava de WalkSpeed)
 Modules.Connections.RenderStepped = RunService.RenderStepped:Connect(function()
     local char = LocalPlayer.Character
     if not char then return end
     
     local hum = char:FindFirstChildOfClass("Humanoid")
     local hrp = char:FindFirstChild("HumanoidRootPart")
+
+    -- Força a velocidade configurada no Humanoide continuadamente
+    if hum and hum.WalkSpeed ~= Modules.Player.WalkSpeed then
+        hum.WalkSpeed = Modules.Player.WalkSpeed
+    end
 
     -- Aimbot Normal
     if Modules.Aimbot.Enabled then
@@ -425,7 +501,7 @@ Modules.Connections.RenderStepped = RunService.RenderStepped:Connect(function()
         end
     end
 
-    -- Silent Aim (Câmera Direcionada)
+    -- Silent Aim
     if Modules.SilentAim.Enabled and not Modules.Aimbot.Enabled then
         local target = GetClosestPlayer(Modules.SilentAim.FOV, Modules.SilentAim.TargetPart)
         if target and target.Character and target.Character:FindFirstChild(Modules.SilentAim.TargetPart) then
@@ -455,7 +531,6 @@ end)
 
 -- Loop Stepped (Hitbox, Noclip & NoPlayer)
 Modules.Connections.Stepped = RunService.Stepped:Connect(function()
-    -- Hitbox Expander
     if Modules.Hitbox.Enabled then
         for _, player in pairs(Players:GetPlayers()) do
             if player ~= LocalPlayer and IsEnemy(player) and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
@@ -467,14 +542,12 @@ Modules.Connections.Stepped = RunService.Stepped:Connect(function()
         end
     end
 
-    -- Noclip (Atravessar Paredes)
     if Modules.Player.Noclip and LocalPlayer.Character then
         for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
             if part:IsA("BasePart") then part.CanCollide = false end
         end
     end
 
-    -- No Player (Sem Colisão com Outros Jogadores)
     if Modules.Player.NoPlayerCollision then
         for _, player in pairs(Players:GetPlayers()) do
             if player ~= LocalPlayer and player.Character then
@@ -488,7 +561,7 @@ Modules.Connections.Stepped = RunService.Stepped:Connect(function()
     end
 end)
 
--- Sistema Visual de ESP
+-- ESP System
 Modules.Connections.ESPMain = RunService.RenderStepped:Connect(function()
     if not Modules.ESP.Enabled then return end
     
@@ -498,7 +571,6 @@ Modules.Connections.ESPMain = RunService.RenderStepped:Connect(function()
             local hum = pChar:FindFirstChildOfClass("Humanoid")
             
             if hum.Health > 0 then
-                -- Highlight Visual para Caixas / Vida / Nomes
                 local highlight = pChar:FindFirstChild("ESPHighlight")
                 if Modules.ESP.Box or Modules.ESP.Health or Modules.ESP.Names then
                     if not highlight then
