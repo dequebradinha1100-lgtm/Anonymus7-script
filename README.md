@@ -9,7 +9,6 @@ local UserInputService = game:GetService("UserInputService")
 local Workspace = game:GetService("Workspace")
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
-local VirtualInput = game:GetService("VirtualInputManager")
 
 local LocalPlayer = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
@@ -23,8 +22,8 @@ local Modules = {
     Hitbox = { Enabled = false, Size = 2, Color = Color3.fromRGB(255,0,0), Transparency = 0.5 },
     Player = {
         WalkSpeed = 16, JumpPower = 50, InfJump = false, Noclip = false,
-        Fly = false, FlySpeed = 50, AutoStand = false, NoPlayerCollision = false,
-        Notifications = true, AntiAFK = false, AutoSprint = false,
+        AutoStand = false, NoPlayerCollision = false,
+        Notifications = true, AutoSprint = false,
         Gravity = 196.2, Scale = 1
     },
     ESP = {
@@ -103,16 +102,6 @@ Modules.Connections.InfJump = UserInputService.JumpRequest:Connect(function()
     end
 end)
 
--- Anti-AFK
-local idledConn = LocalPlayer.Idled:Connect(function()
-    if Modules.Player.AntiAFK then
-        VirtualInput:SendKeyEvent(true, Enum.KeyCode.Unknown, false, game)
-        task.wait(0.2)
-        VirtualInput:SendKeyEvent(false, Enum.KeyCode.Unknown, false, game)
-    end
-end)
-table.insert(Modules.Connections, idledConn)
-
 -- Loop Principal RenderStepped / Stepped
 RunService.Stepped:Connect(function()
     local char = LocalPlayer.Character
@@ -172,22 +161,6 @@ RunService.RenderStepped:Connect(function()
             elseif Modules.Trolls.HeadSit and root and targetHead then
                 root.CFrame = targetHead.CFrame * CFrame.new(0, 1.5, 0)
             end
-        end
-    end
-
-    -- Fly System
-    if Modules.Player.Fly and root then
-        local moveDir = Vector3.zero
-        if UserInputService:IsKeyDown(Enum.KeyCode.W) then moveDir = moveDir + Camera.CFrame.LookVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.S) then moveDir = moveDir - Camera.CFrame.LookVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.A) then moveDir = moveDir - Camera.CFrame.RightVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.D) then moveDir = moveDir + Camera.CFrame.RightVector end
-        if UserInputService:IsKeyDown(Enum.KeyCode.Space) then moveDir = moveDir + Vector3.new(0, 1, 0) end
-        if UserInputService:IsKeyDown(Enum.KeyCode.LeftShift) then moveDir = moveDir - Vector3.new(0, 1, 0) end
-
-        root.Velocity = Vector3.zero
-        if moveDir.Magnitude > 0 then
-            root.CFrame = root.CFrame + (moveDir.Unit * (Modules.Player.FlySpeed / 10))
         end
     end
 end)
@@ -276,7 +249,7 @@ Players.PlayerAdded:Connect(ApplyESP)
 -- CRIAÇÃO DA INTERFACE RAYFIELD
 -- ====================================================================
 local Window = Rayfield:CreateWindow({
-    Name = "EvoHub | Sirius Engine",
+    Name = "Torcidas 7",
     LoadingTitle = "Carregando Framework Módulo...",
     LoadingSubtitle = "by Assistant",
     ConfigurationSaving = { Enabled = false },
@@ -350,32 +323,9 @@ PlayerTab:CreateToggle({
 })
 
 PlayerTab:CreateToggle({
-    Name = "Voar (Fly)",
-    CurrentValue = false,
-    Callback = function(Value) Modules.Player.Fly = Value end
-})
-
-PlayerTab:CreateSlider({
-    Name = "Velocidade do Vôo",
-    Range = {10, 200},
-    Increment = 5,
-    CurrentValue = 50,
-    Callback = function(Value) Modules.Player.FlySpeed = Value end
-})
-
-PlayerTab:CreateToggle({
     Name = "Auto Sprint",
     CurrentValue = false,
     Callback = function(Value) Modules.Player.AutoSprint = Value end
-})
-
-PlayerTab:CreateToggle({
-    Name = "Anti-AFK",
-    CurrentValue = false,
-    Callback = function(Value) 
-        Modules.Player.AntiAFK = Value 
-        Notify("Anti-AFK", Value and "Ativado com sucesso" or "Desativado", 2)
-    end
 })
 
 PlayerTab:CreateSlider({
@@ -516,4 +466,34 @@ VisualTab:CreateSlider({
     Callback = function(Value) Modules.Visual.FOV = Value end
 })
 
-Notify("EvoHub", "Script carregado e executado com sucesso!", 4)
+-- --------------------------------------------------------------------
+-- TAB 7: SETTINGS
+-- --------------------------------------------------------------------
+local SettingsTab = Window:CreateTab("Settings", 4483362458)
+
+SettingsTab:CreateToggle({
+    Name = "Notificações",
+    CurrentValue = Modules.Player.Notifications,
+    Callback = function(Value) Modules.Player.Notifications = Value end
+})
+
+SettingsTab:CreateButton({
+    Name = "Recarregar Interface",
+    Callback = function()
+        Notify("Settings", "Interface recarregada com sucesso!", 2)
+    end
+})
+
+SettingsTab:CreateButton({
+    Name = "Destruir Menu",
+    Callback = function()
+        Rayfield:Destroy()
+    end
+})
+
+SettingsTab:CreateParagraph({
+    Title = "Informações",
+    Content = "Nome do Hub: Torcidas 7\nVersão: Atual\nCréditos: Assistant"
+})
+
+Notify("Torcidas 7", "Script carregado e executado com sucesso!", 4)
