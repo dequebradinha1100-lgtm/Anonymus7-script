@@ -1,3 +1,663 @@
--- Made By Hendar
--- create here: https://lua-obfuscate-maker.lovable.app/
-return(function(...)local z={"Lg!3V1L\'f0pf,]+","Ld!?NM\'Qai!_A<ia<`0";"L,GTKpo,","WJc0c1kFe","WG/ijgGdEowFp8wN=";"Wm2ONEkLD","LOiB\"W2r\'pITcnC44rnB","L?9-0/6Z?s";"L7(60n<G9KWo-Cb8";"LdKHgVdKHkg0R)L:8@X\'D?tO*r6n";"LK(9l;qE\\%Lqr!\\67^";"WNNU6BGFRNBiQJnd2Ue==";"LZDuL\"PKcO-";"WnsrUqglI";"L^gW2nYA_N","L(Q8CsHD\"^=#R<","WqQJgne==";"LLuFW0(?\\t*Sb";"Wc28vlUvwUv==";"WXT52";"LW4hEDL$","WBTZubLWyR6==";"Wv94uHNq/N/EBUB/PL/J=","L!;DLmdOQjL?MTM^";"LZ7MJ\'3\"(ueLS8V,","W5Aj14tkNGG2PNloO";"L<,SX";"W+16pe6==";"LD_^`UfH#G@$H","L.PN`F","WnjM4UO==";"WwVkA4TOw";"WWJestd5VYJ8mO9Z48O==";"LdIR$^=dG";"WTGZDT0FpT4qqLwfBUe==","Wc/TTfLLp/aEVBfe=";"W2F1IevGm3Td4B34=";"L]lAu(@#ujpjgoqa!gSE&a)","LUnjOsHX8b";"WowFuH6==";"L*K,Gu67s";"WvzZSm0X93v==";"W8MW=","WH46D50AArHdUjW7afeHRTPK+";"WkxZDoNUfXBI+9AU9L6==";"WLBh0rO==";"WLDdAknocoO==";"WMMRLhCqStVA=","WNuQMV153zN+W";"Li_idQ\\I\'aV+s-R\\";"LP9eE:.X\\s","WkGBqps0ymdT2XO==";"LZeIk<O%c,ZQ.","L(Q)8dS>H`MM]S70p(m@r#<%";"LA.;TeN1o\"/M?5#\\6A1Vu";"L.WB`tKd4","Wmmgfr278","LF3ZjTAp/Np","Lm!X9hl\"%#<";"LXFNV0n]","L7PCW:<]]H`3#[\'b","LoPM6X07i[$m2!k]rDKSaJTo=E?k!u__#";"LfCQg&Ze`G\"\"`";"LV0_l";"WOKbu5c7iy3h=","Lc_I/6","L)V;m/-chL","Li^`uI","L(L;*+;9$BGL2";"L6f!M,E_G%5)in","LOUREHJ\\0L3i60W6>\';","Llgl(e%B5$bP(n","LoG:cpp<OD.\':U1TIZ","Wr67SI1l4rVc+QXDO","Lk!oP2uPH_8FM","L\\afrnpdt";"W8wiEgDUAkRcmg6==";"L1tg-rsK/^T@b+3&";"WgcUg8lgQL/ZboO==","L?)4X3iE6G/&%m@3";"Wd29ANwqEtB9+k6==","WowiuoDfZ8Rk=","L4cQ\\2>c&J8@2","WirHg4/13BGD3zv==","Wi7udcwl7ZpoHBO==";"LEUfG:[Fmci,C/(Q";"WE6t6pl2ETxn=","WTBpIVfKereb8","WzZpuHNzxuv==";"W5ee/KGkmTuW=";"L6Eq[8_;8H)7*S?H";"L3rndr!uFg?WsG](p\'Y)u,b","L(!@_c(%>3+";"WM8BPA5Gdxe==";"WmeWBk6==","WoZwq";"Wxh+zsJLnNXTe","LE=6$06X01(","L>@.tH8U>g*RA/nai7","WV8ngLUZL","L<Cg/;s,b","Ll1SmA(0r1cEB","L5JCfu)b&SXcn";"WrK6XDYCYJr7/Xv==";"WxNfu";"W7bp+8YQWO0k=";"Wn+naInJUsDH9","LhA)`+S3E7$","WqkVthLWyA6==";"L%$P8<","W1N0GytBxTw4=";"W3MarWCBEBe7nBWCo";"L6CMMk8/","WLRdfLR/382CAoNiRNN7=","LdFO1*Lf#t","WVelmYUJ=","L_W?nSdM]k\'6Y+fT_Z";"WNuhV2HPSu6==";"W2EGfZ3WbfnZx","LRt>pj)RbSTF&tDX.^Ymi";"W1CYA3ToSNWar","Lt\\1[Y&Z";"WE0xXDxdjNt/O1Ib=";"WFIVAse==";"L,+qH#*VS2Gr#q\"8Bd@u","WjZjW96==";"LrBJb\\g%","WOZ5W3zvy";"Le[hqDq;m\\*";"WAOor8XBu","WocdHtccxH/UNkun+bv==","L@K@;f-NHHI/W?fIG5","WdlavQO==","Wlaifq2s0oe==","WS+9wgwN=";"L67Y9Qg!";"WSxO2FIwNvTSyST6NpJx+9AUt";"WsYcZVGASbDK3Qg5SXx6fbQsAPeSnfg3PmLJ=";"L_Wp-$0cBb3M11]%";"LC-L=","LOdYU55CrGpYtNl*","L@FXk(s,*GIK>M.U+9?)&o4";"WjaPHGXe6";"L0F^<io(Y","WbxcAgv==","WbB7/809xJnF6HN9a";"LuPbCXL9h","WmnvILEWcUbJ=";"W+lTNCvh5pOOf5Iok","L$#6R1#b";"WOEC3FmWG23N=","LZ#k]M&k`pJRu","Ldm#=*_5\",koT=)&06d","W4J981v==";"La6-W#","WNF88HeMe+6==","LE-AW#lmr7Zk\\I2/OY","L.Rjr;","W9R9lowi+J6==","WfgoW2PJ=";"L!5Y5\\R]/D=";"LBJT95e_0","LP73j","L08_jO_#";"LkkHKR.A*","WoAIM84o/glfWk/n+8v==";"LQBa9tYn]<F1INCSDn!";"L\'OC)X","LG_95Bq>","LQ^;0g3V[/I","Ljf7\'L=/Bp,q>","LuZ[0HYHI";"WdBI/8v==";"W84ivLAiFLNe6H0oJUBW=","LNiE-=<a2*G-4)F";"WyQd1Wkd0JfsegJpA","LI%OV#sq\".","W8BFAHO==","L*[\"\'-i.]X9_WaD\\oE\\";"WBvbc1jcQqF6=";"L3UcAE>AdOY)Vj#H","WJxGVs132N8A=","L@ZI_<h!;?qG%";"L!AbYH\'QU4e]oK%l_@G";"Wk29A8B9AbGdEbRqc";"WQlgimNdexGh=","L^AD=d;\'b*^gEEIT";"L?82U4","LpmeUkC;D@u:?Z\"cC.V0ZKPao","WBxdITGgpN2nAdMcf8e==";"L7A\",\'?m^S*3CsGc?b";"L&&M8XQK`i^pu5W\'";"WdrD4+e==","WGYKb7D6k+NsQee==","WfafIUfmod6==","LF\";m";"LXt3Q.oui^H-/","L\"5>de.NXD6]SBq)";"L#U^A6+LoaW<(VBo";"L;\"m6O.Wf]";"L$?AQ!","L664Bn<_L$!8b0?*>)b","Wy0x7Lexb","L81t";"WnUYbnbh=","L3JZi1a;=8";"LE$+<WiY","L@ES_gG)JE5q5";"W5N6tbCspj32adv==";"Wzdsd","LY`OC>-Ju&1q]u,","Wu/D4O/dC";"LgZgq[U($h#n#IrT\"2";"WzSObE3QbyRxw3LnURKh=","L\'D%`\'d*%","WBa8Y5e==";"W/b6XJN8J6v==";"L>Bt+loS)","WvH92NTFGaiwrfOYlmFajKKb=","WPtSOB6l30uIdJDGIUwBLo+n=";"WghkC2LBA","LTCWF";"Wv0fcbGdcNwF+bBo+bG3Q","LD^Roa*;>","W1TP0R1yjp6==","LT@+]pE7";"LD+%Oimq9bSOnn";"W7iJQ91GIBOv=";"Lee=G5t!Q","Lq]FbsG%";"WrBKktQtb16==","Lt\'.aEtYG";"L:lV:<*]Tj";"WhMp/BZlW";"W5ebzAPUNk2r9";"WSkEa8IMPav==","LPY4Wq";"WuAiNfduJuO==","L[182C?Do","WVve1EJgy","WrkVb1v==","WowbIXnFSdncD8/dI";"W","Wg2/EowUQ";"LZNJ^e\\DlX+uZ","WFyJF","L#2ab.\"jC=:Fd<+Rcj","W2jM2jtWZj3+PB9wXKO==";"LRQb$V?\\Xi","LCN)3LSo3ad","WsVRs76==";"LNnq\"e";"WXGgWXGdCb2n2dMEAov==";"WQyL01TB6jMVZ0Qdg";"WFflhEVgqYuX9","L,*!ch>YmJ:d_PCW";"Wv0fcbGdc92cmgwi0","WkFovX9Q0HwWA94ofHBC=";"W95iGPrr7VlPPv78o","L@fVVR";"WUeQuM1N=","LoC!]*30GkFM^pS1";"Wv98HUjg1N7xG";"W9wFjkw9+Wndcow9low94Wv==";"Lg^mK?","W7SkE2f8v","W9eAQK2LwgyN=","W9AI/82j2H49WkNFI9v==","Wv0fcbGdcN2qZgw9+";"LIYLOq","WHm8kXFnvMv==";"Wg1yVwXEc/5M66e==";"Ln?#?#3L%q]<]t\'W8Y","L2k1@5u6OC","WZWvhXCmH","WUufXdBInbTUrLGoJo4k=","Lm!\'8Dj`HTZXV","Lpk.!9Z1T#?8*G?Ng5^4`W,";"Lo,#`+7C\'","We9ZTQbElQlVS";"W85uigrZsM6==","W04up+LjcNUUcCMjGssiY2oa1LntGiV1msaFC84B52bUdJ6==";"W1BdrMab=","Lpi/-&","Wl7zg2m8HXYbds8NA","Lm\\_E5dQiReRcY54Mn";"L(]:$^<,Jb","Wn3laNoOHK6==","WH1MJy5Jo61jZCL0Pxw3mRe==";"Wv0fcbGdcvx9Aowim","Wh8mMMO==","WEQLFbCUDSpHXBoqhCO==","Wv0fcbGdcv2i780fvHBUYgGW=";"LFVIFA";"W2419lQQzVnkg";"LpRr-L^g0","Wd29AN29+oRclgv==","Wn9JZGdsOjqIwk2J4/v==";"L7HdX`$Yk_t]U:qD?V";"L*[8rJ<eI2Ji)*_Uo2";"W5dzu0CiRSmtQlfe+","LkgaSf%ER=I","WQvRMhFx8zn2rwCZE48af";"WdN3bPcNFMznEQe==","WdnIaJw99U/dvtwdC";"WiAODte==";"Ln2RER","WyfCg9D9j+e==";"L*hQ\"C6-Zo34PJ?","L?q$qV<Q2.E","W9Hj5KQDm";"WR87QXDjBrE0GgGb=","WzEGPFS+7+f8B0Leo","WkR9j80gc";"WVFkEXRpUdcS1IYsLg1nKOvO=","WC4oWF1W7xLmiNlmE64CU2X1dkzaRODn=","LPi5:L+VN_0>$8";"LQpn^L<2sA","WLGU3","WLcUyT4dcb2i4gv==";"LEsWXlXde$u_<hbIZ@EV4ee","WptJ+d6==";"L@<m7T*_q-@";"L)j=cr","LCm9!XahLZBE/";"W23XRAe==","WOyLNRKa6W1JOp8YP75dBbP4OM301TTk=";"LuehuSRT[5^PIY";"WtB9xOe==";"LD<;^6)=S";"Ls,Z/;+uL$/";"WuhuRVfqVVLAI4WAqs9wrIR3e/PNPxqbNwcbQAe==";"WjBDeo5rI","L:G^\\nHt-Fs$tD[8d?l";"WZ3cWZfU4HkW3RXQ=","Wxequnu9LAmRH/GKL","L0c^uURm`","WoLs6EXW4";"Lf\\SN,>7kYZ$/O";"WAzs/9EbZ/v==","L=HVe+";"WrE4LArFrsju9G+uIOjLDYypXoiNQFEYpaO==","WkigCXO==","L\';&i`DYQt\'U72.!O^\">";"WbxvLyV5zGzATsqZ4oXlIJO==";"L?t.&<7stqcRM,Y";"WkpqYSJcd";"LU&o(\\?b";"Ll`YDKem5urbbT6lee";"Wqa2rFCw2Rv==";"Ldm#=R087>Y","L\'*\\.0sM\"jAG2=Faf<0,d1^]@","WXe==";"L?`Xjh6o/<BRiV(J","L?:NF^oaV";"WoZ+ysiMKemLjGF4pxRZtFXVxNS+9gs32ozGo";"LD%?JAc]";"Wgl9jU294Xw9PXNFy";"L3D*#@.#<7OW:p3/","LU^U#B";"Wj2BlOO==";"W9AUYCRVaIWFICSIDMO==","L*8YeH";"L7hhREYAm-@O!h.(","WiQzUUe==","Wv0fcbGdcdDfakwdao2C=","WZHZ55LlZ","Wz81TBWEM0NC=";"WkwFZkxJ=";"Li.EpeM/\'3q8ZX_N_U","LA*M+!pUS","W56g0afxv";"WGnS+93sEClh=","WtGWq2dGZ9NukYjv5EO==";"LFBnFB^\"/)bYm>";"W+EQkx6==","WT11kY0qXEqO=","LTc6N0:n\'p+","L!rc2(o+RG0Rm)Dd\',S";"WgGf+80W=";"WBz92xRh=";"WTUHTrCHglaDXo88hQEBvG5bxAvG4pv==";"LriO,b\\gFD!";"WgRqa80W=","LsY#2&RT%jb[6@KW\"81@RogQD5gsj+io\"7^KoPhA","LnXgWM","W0GIJQ6==","LRHRHm!1EgW^,";"WWg+sxPhG","WAu0ACBQHvv==","L8>><>c0ULL[<","L=3hHg,o?&J38\"#N";"L2uQrHJ:Gle3n","LOBl)jp\"e";"LgH2@","L7NT.O6ZK","Lg@1\'","WyImj/o6=";"Wg5Gqj8AznJz9cBsp28Q=";"Wb2EEke==";"WIkvMPewfq2yZsVlr9SU6","LGn=Y\'q>;8?+,Q4RS3";"WJNn/d3YduM73KyI/";"LHfEh&rjcck5j][aLsFNOQi[mt&ujg&2Ge2";"LsKP\"uYTDM]f/","Lmii1/cAOf*2m9/=,S(l";"WpYQJPEJ3uPUOBRX7zxaI16htIM+mcMNlQb7Qge==";"Le_r2";"Lb%@\"U","L,/\'ks;UO6qY#","L4&2?De)1K";"Wn+z7ziUlmQ/GPzgVQqQ5";"Wvp36SJlLVp64re==","LCXAlP,Ki","Lf0aWs";"W4pjDYfiM4JQkHkXNB6==","WBhPaje==";"WtH96S+3uu2fmaBhA51yZeNV9NixSOhFgKe==","Wv2i780Wu","L]^m7L7sNqS7Wf:3","Wcda5tJzCdZCdvN4YmO==","LR.PX<8Y","LuoG&#^2";"WYhkCJeIo3Sh=","L[.@&[WejL@s%";"L\\0cV-";"LbV#cp6d\';","L0MQC.pb_D4K*AM.","L_>jufWZ3a!!5Nm^i*s","Ww/SUGuLV";"WilNs+zaK";"WAzJFJBJH51wa";"W9nfHT2j3v/FqUBIvb6==","L3*jsc","L7hLDB-0]:q#OY-/.b+BT";"Lo+t","LCAGg/f)*+";"W92FZongak4UQHBq4";"L7sAGf","WWZFOb9rcpR6BF0N79y4qbv==","LbmBQU]$o0+Y#","Wz0+EsZNkVwvImbgR3cmchdTElRu8","Lj$J_>";"LnV$;/3GDK1@GLm\"$-M";"Wv0fcbGdc9wixg2qc","LZ0L&_ReXA";"LRjtRB>-6NS#,.","Wb2imb2FA";"L](.+508_5\">s\"D6";"LJ+L(3O:\\kG","Li+[5IG`3\'u*-J.KV]";"Wk+mH4LoLpKO=","LKj=;dQf6","LA0V3]";"LuCQAnWb+hE","L!>%,Y8.VMq]^EQ,6n","WE8NNXe==";"Lo@\\-jm\'8*5p%-Q/";"LIstf>","L?4?PJ_D++";"LVZgBc1^N","LC/NTcDY?TjtOn20","WirHCcoe+Sv4=";"LGuDQkkr!2";"LWG2$";"WS9Ud+Yj1I5z2p9fd","Lp//AotfOFIe`qhX:V]*";"LKnb/kgmq";"LkZKC2";"W57h/aHXGqBp6+4edyJXy4lUXcVURaf7YiVg9jv==","W+DNXyvHTRe==","W/ETHg5oRZsG+h6==";"L8\"XR0oZ>KY<9ofO3M","L/iGUQ%-prKM?kr.";"WarcBI6Vu","WKf9xuzWnlSdjSHOuuCXWo+HjuoLfTJHN0PQ0cG6UT5EsgX65nEw3mxRetdu0Pi7J0Z7AAuJ4";"W9NiZk9UPJF398xoYgGv=","WKUGRDxkBBCXQ7XdQ/Qk42poJoLPA+GWgyuX8yv==","W+g787IuF7X3d75Ic1vpzsmN=";"L!%X*K8;B[nRrf2A05","W8Fdk";"WrioGJFAb";"WtW3/Kj0X+9bTLku6/e==","Lr7.4`jb6b";"Wvarz91rY/RjHY2YF3uTvmJuwEEaDmrHPyFv=";"WoRfIkRoMb/ZQtwEV","WwWHCM80wok1M","Wb3qz3NMPlkdQ8rk=";"L+ugOMVYU]uro_B$";"Wa3eTke==";"WLCHikMCBJ5Ui";"L/mBC%f_M63";"L+q&6FY2=\\m";"W6FJCFh6YyEfNov==","WR+52g6==","L-\\q&ug%","WwXg3TwXxnIItkyT10CQ3KHH8oNN9N/7=";"W4ba+iJmn/FyxNGvc+irG39v=";"Wid652xfmFxyKnUX9";"L2=OR:ngRS4b87\"606d";"W89R9AwmMSL5W";"Wdfbg/iciuSf3XOgaTmiaCo4=","WbVBh2SAcg8Dxih9gV9ZF8jiPZ6==";"L>$@0mn!dr","WfIu6Ev==","L!q%U\\CjKtnm`","L6K=VAS`3F";"L>?k0,@m_";"WowimoB/pgGW=";"WuZelyi1A1zW=","Wb+G8","L2:4Y&:)`<8","L!lPgF";"L<Tj(Zqu<","WQ7lcm5MhgOOEqhZi8PVOQe==","WoN72NQEtXOjM";"Li`.Jf3ptH!,a$@3mP5VkPcD(_),&qm","L6o.1E!Np&TA9V\\Eib?";"LaloY:?p$";"WoBECUcgEJ/3CvRqx","W6OInUkS5Y6eQ3sCem50gUk/CDiepBl9JE54VSE0BaO==";"W8BFAb2e=","W80dHv4EjHne6oRhq8GO=";"L,GT<:","WTuUMUnivdMfYdwUUTv==";"LkMf5j&[a/QP!","WGzxyGe==";"L7W]n\'8[I<l0/l8K7?0";"L]Th#p_5\"\"";"L=_>4Q!g_T7l\"A!U>e;r4[Z";"Wy8UNzA2rfv==","L6gcbno+2";"L-o4St\\g9?";"WTddh+3Gg";"WQHAC218VWSHNrB0NxunFWglxlLx9MFa91TFFHv==";"L[Z\'nPn5].","WFoeF20pPlIb=","WFNlmXmB6O0xm";"W1VVuxGG29XbI";"L/T:#()G:Y<IU";"L:R`cO","WS1LJu3iUFvODE3VU6cW=","Wk29wNGo08AvIknclUwn=";"WoxmLe/z9","WtaN+99st","LCl0I7>%/";"L6mZFZt?WY[R+";"WMlV5f82k/IVeri5FbC+GPRJ=";"L0`jBa!d\\:\\0Y0@Z)\"m","Wa2IUbeHkLv==","LPLWDL88qkO,6FTh)ucR.Y@*cRbsd8IqLN&\'p!_C/\"c>L";"L<2KC(_5^RC_%f=M","L:C!8u4u728@2";"L6lc(`WcA($_A=LH","LUC[\"-oc5\'f\\u;6q;5";"W0pcs1MFG","L;,)/","L<:P=Y;o9","L?,2!B>?PX00Q+W]";"WskfSxmLgZ2+h","WJEolDmA=","WWi+6NxoZ","Wie==";"We8HB1pRTLdgz/SBL3k0Z6ISbfKN=";"L7fJ\\ulkcLM\'YRIdri4";"LKKZ\"LC6UT^";"LZ^r-eVL7BN";"WInVQX6==","Wg0U/be==","WShQM8nO=","WNGdMJMdxJRqUNBZg9lk=";"L!-XW];m<PjQ.";"L,B@o";"WbMVfKTKOLATG","Lb*HhgL[/","L*XoB^","L\'<ba>UX\'l4sl&SI(DNh4","Lob)E*$&8>!q>";"WxbPLBv==";"LP\"d/\"@er","L]!Z9WY\\PK","LeX><:,LeJ(_\"V/4";"WPTpEVBhp","WfVhidgehvqO=";"WvUsRAJx1AHpu","Wi9pOJQXIIhl4k3sQCv==","LM2phU";"WJFc/UFZcTn9udO==";"Wv0fcbGdc9wFp","L,od0I0,U8SocdG/ilAhp";"LWS)?LsG;uHrKZ_ZZ]s";"WQDPNSjACsv==","WAsb/wZfym6==","WnppqMR7vet7pBYgfkv==";"W8YLyYtgW0AEsxuRE05rXfe==","W92FZoO==";"LR9+6ko%@";"WWl1C2NlT";"LFWOVk-7";"WMQ6JCBuK6o7a9j42","Lm%kMY";"WNbWXltm0KZp00ux5";"W+bAanj3HKSb=";"L=LFT%<GX@fNs(`A";"WdwcRoR4+vGdnvuFEde==";"WZNIasTRCXCk=";"L\\+Uj\'j!Y]J+[1sQ";"Lb0\'P>SuD(%t9DMh";"LA)R)-=_OKff2]WL","WJwdKZ0/TaaOCOlq1B4j4sNiZm7hOjv==";"LjNVAL";"W0tB2h6==","LWZo<$!kCbaW6\'#R","WXF0K0F7d";"L2(0&LW`","L8*8k:R:LW\\M1;ZZ8Y","LfW5urX`.";"W4drs0D0qr9n=";"L>[fOA6L%JN_;-S6","WPTUuebnu5mT3","WDIRyc4O/";"WCyGnciSE";"Ll`h[-j<nf","WYu850xyoUDQ=";"L1>QUP2Uh5uES=OR";"L_+OQ";"WLu3r94FZ9c9qk0cc","L;%4=!Z\',";"WTRiAHBgI";"WQpYPwrA=";"L8J:fYls*kUt*M4@";"WoDc6gv==","L][[=?#iof-8u.s1","Wt930LBFjJuoSTAZA";"WSPyFXBKg";"WxsV3JYgHwIwv","W1/IHHQ1+m7v=";"LW<?\\tRmQWg);kC?0p]","Lb*=tZ>bm";"L4T30ZI)Fo2r?fs","LW+V]^Wa>,`8WXCBMj","WU0B2dKx7AO==";"WxBheSowmo6==";"WnEYGbdUxkwN=";"Lu^:q15Y=$5";"L[d8Xi";"L5J6spWE!","LgkkOGF_A9","Lq_/H(";"L].U+H6j";"WtxZdbNoDgu3ddw6Ige==";"WsqWi";"W8lFNdDfLg2vIvN/5UM4=";"Wk+g7Qt7=","L,GT\"1_d/`","LEhW2u@TBM\'=PD.B","L7o\"Op4V@>?fX3XBpZ";"L?^G<k^f63hq5","Lp%<\"]Gar`E&7QW)1N";"WcdEAIFiRXdPcClaihJ1aTJQ2NKdprJnMeWBmAlb=";"L3^q>P7ND5cd!HHI";"LdKHgVdKHkg0R)L:8@F";"LPr8&A*BD","LMJ]Te"}for B,T in ipairs({{-34538-(598578+(-980158+347041)),840037864%5600248};{(-1347024-(-650677))-(-696348),(-596865+1482229)-884927},{2624+-2186,204157414%13610450}})do while T[465963+((-500337+331072)+-296697)]<T[(759090+55954394)%(489251+861070)]do z[T[346855783%16516942]],z[T[146671+(702614+-849283)]],T[917753-917752],T[(-944466+1778122)-833654]=z[T[(847144+(-857452-571668))+581978]],z[T[2934553155%11880782]],T[(960817+695467782)%9406803-325176]+(156811+-156810),T[438294962%3652458]-(177883+-177882)end end local function B(B)return z[B+(417110+-358091)]end do local B=string.char local T=math.floor local p=table.insert local O=table.concat local D={["8"]=316483+-316456,n=618106416%10132892,X=766985+(-1227378-(-460407)),d=((692414+101519)+90138486)%4133291;A=321308+-321256;Z=-46539+((-595063-(-1003918))-(725309-363034)),Q=28466776%9488912;i=57818-57757,G=244272-(-651303-(-895552)),f=97016384%1021225;D=142286+-142279,q=-474818+1604516313%(-766534+8668216),I=-36456+36513,p=-203091+203125,R=938175+-938137,["9"]=-679469+679490;V=17078-17020,k=-628619-(-628647),["6"]=274671+-274623,w=-1003187-(-1003193);E=1983459653%11080780,T=141313-141294;F=489359+-489354,N=((-34829+-565368)+-71587)-(-671804),["5"]=-167271-(-167282),e=-757810-(-757842),g=-236915+(-769035+(491134-((717685+-758454)-474072)));L=-910579+910597;["3"]=798649405%8587628,["2"]=221361-221307;j=-564068+564113,H=644259+-644233,m=((391374-140620)+-151078)+-99630,["/"]=1808654391%9371266;a=703142-703095;J=597211572%3779820,["+"]=-494751+494801;x=-91298-(885547+(-1082781-(-105897)));r=2242611237%(1040661+11279198)+-396889,b=-192308+192332,c=(-792607+1175447604)%14683187;["7"]=480271-480227,Y=-1028034+1028077,P=258400298%1305052;M=934969091%14608892,["0"]=(-506855+-454635)-(-961545);U=334723+-334710;v=2212497673%14460769;C=(-211695+(6490-734766))+940027;u=857291871%3711220,z=893944191%5484320,W=2002826834%11510499;s=-295392-(-295455),l=6284576%2094847;h=-868393+868453,["1"]=230620966%7439384;S=-769144-(-1051642-(-282456)),K=-894087-(-894146);["4"]=-953247-(-953283),t=503964+-503934,y=492838144%10057921;B=179500+-179478,O=-376824+376824;o=932137+-932108}local f=type local L=z local U={J=238294549%4672441,["8"]=1290726%1290692,L=(-951562+219018564)%1730690,D=-640629+640678,["#"]=-158271+(321035-162725);["%"]=711088818%(4361322521%19710657);C=1020947-(623723-(-397214)),["`"]=468968-468884;["$"]=207430+-207401;k=-756656-(-756732),O=(963330+(-970991+-620592))+628332,q=-448261+448262,t=719053-718997,["\""]=1340231120%11860452;n=(246815-943594)+696860,["]"]=-756573+756599,N=35029914%898201,S=-776575+776578;B=294634684%1876654;[";"]=2119626988%12768837,[","]=-62088-(498506+-560624);[":"]=(870680+10038321)%10908949,_=1179906878%11682246,H=917989-((1502215-(-456878))-1041152);X=21942-(345006-(-282747-(-605823))),["."]=-549210-(-549252),["="]=(889281+-1433215)+544001,["*"]=1373703536%14931560;["@"]=3222319%169592;g=498428-(-409401+907765);A=287413445%1277393;c=1175716213%6718378;Z=((14975834895-(-1024899))%468480513)%(((672836-(-10661))+4472055)-(-62423));["<"]=((-798736+-412654)-(-613869))-(97350+(-1283871-(-588962))),E=-463627-(-463634);j=622211886%9427452,Y=-846643+846648;G=-545916-(-545971);["+"]=715760634%3670567;[")"]=(904313+-1033737)-(-129439),l=(-607186+466940)-(-140307),Q=826074-826070;["("]=482322209%4465946,e=244702-244702;["/"]=882225648%7605393,a=-344744+344757,["!"]=((685706-318167)+(277311+4254279))%4899106,u=-959054+959068,R=(192937+-453014)-(-260108);o=345643+-345608,i=2088669797%(129140+937466989%26339767);["\'"]=127805+-127777,["2"]=86881915%379397,m=-945247+945327;["?"]=(342663273-753321)%(2011220636%16544055-(-970926));F=58953118%3913135-(-76459+332543),["^"]=1509010104%9927698;["["]=164683+(-1078475-(-217448+-696412));U=(382532717%2094323-814463)+(-429683-121774);d=754770-754748,W=-157603-(-157620);[">"]=2158869747%(-908354+14486151);["&"]=439860+(-237771+-202012);p=478813+-478754,h=(1476905-839535)+-637288,r=856558-856511,["3"]=991016-((-481112+62763645756)%((234685+121295610)%(840356+-325244)+245691279))%(1338159079%8682712),["\\"]=611540+-611466,V=(943683513-(-399027))%4560785;["1"]=1408135101%(2446853510%14864084),["5"]=((-1534841-(31047297%15454202+(608200+(10772-815071))))-(-474103))-(-1003583);s=(-183464+405878)+-222395;P=280992827%5734546;["0"]=1052311037%4209244,["-"]=(980712+-1468902)+488233,M=-557046-(-557073),f=789322-789252,b=230277-(-750772-(-980977));["6"]=(639678557366%3182484088)%13539318,K=-126254+126307,["4"]=2265162265%(709176+11150312),T=24738936%(2265391984%14157785);["7"]=(-610437-(-756699))-146229,I=-26313-(-26363);["9"]=(-772044-(-736815+391629))+426941}local k=string.len local s=string.sub for z=-369337+369338,#L,1963284097%8426112 do local e=L[z]if f(e)=="string"then local f=s(e,-116830+116831,985558329%6009502)if f=="W"then e=s(e,(-416898-10450)+(-71826-(-499176)))local f=k(e)local U={}local l=-151959-(-151960)local I=593881-593881 local c=782310+-782310 while l<=f do local z=s(e,l,l)local O=D[z]if O then I=I+O*((-982149+((60696+70492)-(-851025)))^(((221881+-221878)-c)))c=c+589157735%7961591 if c==(319463843-389083)%7251699 then c=-220486-(51819+-272305)local z=T(I/(1529555686%(619482474%12143709+10043286)))local O=T((I%(-749321+814857))/(-983384-(-983640)))local D=I%(618648-(181794+(-700599+1137197)))p(U,B(z,O,D))I=-841425+(313108+528317)end elseif z=="="then p(U,B(T(I/(-296089-(-361625)))))if l>=f or s(e,l+(636077-636076),l+(-426472+426473))~="="then p(U,B(T((I%(1400437640%11026552))/(-1046784+1047040))))end break end l=l+(964508+-964507)end L[z]=O(U)elseif f=="L"then e=s(e,(-7604+(3393308365-531565))%14815586)local D=k(e)local f={}local l=742382-108003031%(7074668-(-586807))while l<=D do local z=(D-l)+833081950%5517099 local O=z>=-809048-(-809053)and 104458445%(10861409-415565)or z local L=968996+-968996 local k=O>-300798-(-1286541-(-985742))for z=1319154804%6662398,105719027%1046723,-103996+103997 do local B if z<O then local T=s(e,l+z,l+z)B=U[T]if not B then k=false break end else B=858063836%(-386092+5100728)end L=L*(128804901%685132)+B end if k then local z=T(L/((2232311857-522281)%25170595))%(1244784114%11633494)local D=T(L/(685174111%9134781))%((1253363883-(566354+-73744))%7242029)local U=T(L/(3294071456%16470356))%(((-1719724-(-750524))+928378)-(-41078))local k=L%(-844918+845174)if O==35730326%224719 then p(f,B(z,D,U,k))elseif O==637235-637231 then p(f,B(z,D,U))elseif O==-472755+(-5889+478647)then p(f,B(z,D))elseif O==(62176476035%(64828137004%483804790))%3865161 then p(f,B(z))end end l=l+O end L[z]=O(f)end end end end return(function(p,O,z,L,D,U,f,s,l,y,T,N,A,H,k,o,F,c,w,K,n,e,I,M)M,k,c,l,y,K,w,n,o,I,A,e,T,F,N,H,s=function(z,B)local p=I(B)local O=function(O,D,f,L)return T(z,{O;D;f,L},B,p)end return O end,{},function(z)local B,T=741900+-741899,z[993308603%8209162]while T do s[T],B=s[T]-535165596%14463935,1133481079%8213631+B if s[T]==410621-(-150914-(-561535))then s[T],k[T]=nil,nil end T=z[B]end end,-313740+313740,function(z,B)local p=I(B)local O=function(O,D,f,L,U,k)return T(z,{O;D;f;L;U;k},B,p)end return O end,function(z,B)local p=I(B)local O=function(O,D)return T(z,{O,D},B,p)end return O end,function(z,B)local p=I(B)local O=function()return T(z,{},B,p)end return O end,function(z,B)local p=I(B)local O=function(O,D,f,L,U,k,s)return T(z,{O,D;f,L,U,k;s},B,p)end return O end,function(z,B)local p=I(B)local O=function(O,D,f)return T(z,{O;D;f},B,p)end return O end,function(z)for B=(318536+-960584)-(-642049),#z,-532214+532215 do s[z[B]]=1859186521%8013735+s[z[B]]end if O then local T=O(true)local p=f(T)p[B(89016+-147607)],p[B(-562740-(-504018))],p[B((-477480-393421)-(-812322))]=z,c,function()return 985531-690725 end return T else return D({},{[B(-214918-(-156196))]=c,[B(-648861-(-590270))]=z,[B(459929+(-603003+84495))]=function()return-72922-(-367728)end})end end,function(z,B)local p=I(B)local O=function(...)return T(z,{...},B,p)end return O end,function()l=(-110274+1257587067)%4970264+l s[l]=1073762563%(-178027+11723861)return l end,function(T,O,D,f)local b,O7,X,D7,V,i,s7,P,a,j7,y7,U7,j,p7,B7,Y,K7,M7,c,g7,o7,L7,v,n7,C,I7,G,m,q,c7,x,R,w7,l,R7,r7,k7,i7,l7,E,u,g,W,Q7,Z,H7,u7,t,F7,W7,Q,J,h,V7,S,f7,E7,A7,z7,J7,I,N7,e7,U,s,d,d7,A,T7,r,C7 while T do if-235121+8627259>T then if 5280589-(334720945-666539)%13325037>T then if T>1044679-(-829085)then if T>3255654-182595 then if 3658487-(-214987)>T then if T<2903108-(-668741)then if T<-351583+3689595 then if T<2490548693%(-756125+20655281)then T=k[D[42519851%8503970]]l=k[D[19
+-- ==================================================================== --
+-- INICIALIZAÇÃO DA BIBLIOTECA E SERVIÇOS --
+-- ==================================================================== --
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
+local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+
+local LocalPlayer = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
+
+-- ==================================================================== --
+-- SISTEMA DE KEY, WHITELIST E VALIDADE --
+-- ==================================================================== --
+
+local WhitelistDB = {
+    ["teteu-vip7"] = { User = "teteu9090900", Expires = "2026-08-27" },
+    ["SCRIPT7VIP"] = { User = LocalPlayer.Name, Expires = "2026-12-31" },
+    ["KEY-EXEMPLO"] = { User = "OutroJogador123", Expires = "2026-08-15" }
+}
+
+local RemoteDatabaseURL = ""
+
+if RemoteDatabaseURL ~= "" then
+    local success, result = pcall(function()
+        return HttpService:JSONDecode(game:HttpGet(RemoteDatabaseURL))
+    end)
+    if success and type(result) == "table" then
+        WhitelistDB = result
+    end
+end
+
+local function DateToTimestamp(dateStr)
+    local year, month, day = dateStr:match("(%d+)-(%d+)-(%d+)")
+    if year and month and day then
+        return os.time({ year = tonumber(year), month = tonumber(month), day = tonumber(day), hour = 23, min = 59, sec = 59 })
+    end
+    return 0
+end
+
+local ValidKeysForLocalPlayer = {}
+local LocalUserExpiration = "Indefinido"
+
+for key, data in pairs(WhitelistDB) do
+    if string.lower(data.User) == string.lower(LocalPlayer.Name) then
+        local expTimestamp = DateToTimestamp(data.Expires)
+        if os.time() <= expTimestamp then
+            table.insert(ValidKeysForLocalPlayer, key)
+            LocalUserExpiration = data.Expires
+        end
+    end
+end
+
+if #ValidKeysForLocalPlayer == 0 then
+    table.insert(ValidKeysForLocalPlayer, "KEY_BLOQUEADA_OU_EXPIRADA_" .. math.random(100000, 999999))
+end
+
+-- ==================================================================== --
+-- TABELA DE MÓDULOS DE ESTADO --
+-- ==================================================================== --
+local Modules = {
+    Connections = {},
+    OriginalSizes = {},
+    Hitbox = {
+        Enabled = false,
+        Size = 2,
+        Color = Color3.fromRGB(255, 0, 0),
+        Transparency = 0.5
+    },
+    Player = {
+        WalkSpeed = 16,
+        JumpPower = 50,
+        InfJump = false,
+        Noclip = false,
+        AutoStand = false,
+        NoPlayerCollision = false,
+        Notifications = true,
+        AutoSprint = false,
+        Gravity = 196.2,
+        Scale = 1
+    },
+    ESP = {
+        Enabled = false,
+        Box = false,
+        Skeleton = false,
+        Health = false,
+        Tracers = false,
+        Names = false,
+        TeamCheck = false,
+        Items = false,
+        Chams = false
+    },
+    Trolls = {
+        Spin = false,
+        SpinSpeed = 30,
+        SelectedTarget = "",
+        LoopTP = false,
+        HeadSit = false,
+        Invisible = false,
+        Freeze = false
+    },
+    Defense = {
+        GodMode = false,
+        AutoHeal = false,
+        HealThreshold = 50,
+        NoFallDamage = false
+    },
+    Auto = {
+        Farm = false,
+        FarmTarget = "Coin",
+        MacroRecording = false,
+        MacroSequence = {},
+        MacroPlaying = false
+    },
+    Visual = {
+        FOV = 70
+    },
+    Waypoints = {
+        SavedPosition = nil
+    }
+}
+
+-- ==================================================================== --
+-- FUNÇÕES AUXILIARES E UTILITÁRIAS --
+-- ==================================================================== --
+local function Notify(title, content, duration)
+    if Modules.Player.Notifications then
+        Rayfield:Notify({
+            Title = title,
+            Content = content,
+            Duration = duration or 3,
+            Image = 4483362458
+        })
+    end
+end
+
+local function GetCharacter(player)
+    player = player or LocalPlayer
+    return player.Character or player.CharacterAdded:Wait()
+end
+
+local function GetRoot(player)
+    local char = GetCharacter(player)
+    return char and char:FindFirstChild("HumanoidRootPart")
+end
+
+local function IsEnemy(player)
+    if not Modules.ESP.TeamCheck then return true end
+    return player.Team ~= LocalPlayer.Team
+end
+
+local function GetPlayerNames()
+    local names = {}
+    for _, p in ipairs(Players:GetPlayers()) do
+        if p ~= LocalPlayer then
+            table.insert(names, p.Name)
+        end
+    end
+    if #names == 0 then
+        table.insert(names, "Nenhum jogador")
+    end
+    return names
+end
+
+-- ==================================================================== --
+-- SISTEMA DE LOOPS E LÓGICA CORE --
+-- ==================================================================== --
+
+-- Infinite Jump
+Modules.Connections.InfJump = UserInputService.JumpRequest:Connect(function()
+    if Modules.Player.InfJump then
+        local char = GetCharacter()
+        local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        end
+    end
+end)
+
+-- Sistema God Mode (Corrigido o loop infinito de HealthChanged)
+local function SetupGodMode(char)
+    local humanoid = char:WaitForChild("Humanoid", 5)
+    if not humanoid then return end
+
+    local isHealing = false
+    humanoid.HealthChanged:Connect(function(health)
+        if Modules.Defense.GodMode and not isHealing and health < humanoid.MaxHealth then
+            isHealing = true
+            humanoid.Health = humanoid.MaxHealth
+            task.defer(function()
+                isHealing = false
+            end)
+        end
+    end)
+
+    humanoid.StateChanged:Connect(function(_, newState)
+        if Modules.Defense.GodMode and newState == Enum.HumanoidStateType.Dead then
+            humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+            humanoid.Health = humanoid.MaxHealth
+        end
+    end)
+end
+
+if LocalPlayer.Character then SetupGodMode(LocalPlayer.Character) end
+LocalPlayer.CharacterAdded:Connect(SetupGodMode)
+
+-- Loop Stepped
+RunService.Stepped:Connect(function()
+    local char = LocalPlayer.Character
+    if not char then return end
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+
+    if Modules.Player.Noclip then
+        for _, part in ipairs(char:GetDescendants()) do
+            if part:IsA("BasePart") and part.CanCollide then
+                part.CanCollide = false
+            end
+        end
+    end
+
+    if Modules.Player.AutoStand and humanoid and humanoid:GetState() == Enum.HumanoidStateType.Physics then
+        humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
+    end
+
+    if Modules.Defense.NoFallDamage and humanoid then
+        local state = humanoid:GetState()
+        if state == Enum.HumanoidStateType.FallingDown or state == Enum.HumanoidStateType.Ragdoll then
+            humanoid:ChangeState(Enum.HumanoidStateType.Running)
+        end
+    end
+end)
+
+-- Loop RenderStepped
+RunService.RenderStepped:Connect(function()
+    local char = LocalPlayer.Character
+    if not char then return end
+    local root = char:FindFirstChild("HumanoidRootPart")
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+
+    if humanoid then
+        humanoid.WalkSpeed = Modules.Player.AutoSprint and (Modules.Player.WalkSpeed * 1.5) or Modules.Player.WalkSpeed
+        humanoid.UseJumpPower = true
+        humanoid.JumpPower = Modules.Player.JumpPower
+    end
+
+    Camera.FieldOfView = Modules.Visual.FOV
+    Workspace.Gravity = Modules.Player.Gravity
+
+    if Modules.Trolls.Spin and root then
+        root.CFrame = root.CFrame * CFrame.Angles(0, math.rad(Modules.Trolls.SpinSpeed), 0)
+    end
+
+    if Modules.Trolls.SelectedTarget ~= "" and Modules.Trolls.SelectedTarget ~= "Nenhum jogador" then
+        local targetPlayer = Players:FindFirstChild(Modules.Trolls.SelectedTarget)
+        if targetPlayer and targetPlayer.Character then
+            local targetRoot = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+            local targetHead = targetPlayer.Character:FindFirstChild("Head")
+
+            if Modules.Trolls.LoopTP and root and targetRoot then
+                root.CFrame = targetRoot.CFrame * CFrame.new(0, 0, 3)
+            elseif Modules.Trolls.HeadSit and root and targetHead then
+                root.CFrame = targetHead.CFrame * CFrame.new(0, 1.5, 0)
+            end
+        end
+    end
+end)
+
+-- Hitbox Expander Loop (Corrigido para restaurar Cor e Material originais)
+task.spawn(function()
+    while task.wait(0.5) do
+        for _, player in ipairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer and player.Character then
+                local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+                if hrp then
+                    if not Modules.OriginalSizes[player] then
+                        Modules.OriginalSizes[player] = {
+                            Size = hrp.Size,
+                            Transparency = hrp.Transparency,
+                            Color = hrp.Color,
+                            Material = hrp.Material
+                        }
+                    end
+
+                    if Modules.Hitbox.Enabled and IsEnemy(player) then
+                        hrp.Size = Vector3.new(Modules.Hitbox.Size, Modules.Hitbox.Size, Modules.Hitbox.Size)
+                        hrp.Transparency = Modules.Hitbox.Transparency
+                        hrp.Color = Modules.Hitbox.Color
+                        hrp.Material = Enum.Material.Neon
+                        hrp.CanCollide = false
+                    else
+                        if Modules.OriginalSizes[player] then
+                            hrp.Size = Modules.OriginalSizes[player].Size
+                            hrp.Transparency = Modules.OriginalSizes[player].Transparency
+                            hrp.Color = Modules.OriginalSizes[player].Color
+                            hrp.Material = Modules.OriginalSizes[player].Material
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+-- Auto Heal Loop
+task.spawn(function()
+    while task.wait(1) do
+        if Modules.Defense.AutoHeal then
+            local char = LocalPlayer.Character
+            local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+            if humanoid and humanoid.Health < Modules.Defense.HealThreshold then
+                local tool = LocalPlayer.Backpack:FindFirstChild("Medkit") or (char and char:FindFirstChild("Medkit"))
+                if tool then
+                    tool.Parent = char
+                    tool:Activate()
+                end
+            end
+        end
+    end
+end)
+
+-- ESP / Chams Management
+local function ApplyESP(player)
+    if player == LocalPlayer then return end
+
+    local function UpdateHighlight()
+        if not player.Character then return end
+        local highlight = player.Character:FindFirstChild("ESPHighlight")
+        
+        if Modules.ESP.Enabled and Modules.ESP.Chams and IsEnemy(player) then
+            if not highlight then
+                highlight = Instance.new("Highlight")
+                highlight.Name = "ESPHighlight"
+                highlight.Parent = player.Character
+            end
+            highlight.FillColor = Color3.fromRGB(255, 0, 0)
+            highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+            highlight.FillTransparency = 0.5
+            highlight.OutlineTransparency = 0
+            highlight.Enabled = true
+        elseif highlight then
+            highlight:Destroy()
+        end
+    end
+
+    player.CharacterAdded:Connect(function()
+        task.wait(0.5)
+        UpdateHighlight()
+    end)
+    UpdateHighlight()
+end
+
+for _, p in ipairs(Players:GetPlayers()) do ApplyESP(p) end
+Players.PlayerAdded:Connect(ApplyESP)
+
+-- ==================================================================== --
+-- CRIAÇÃO DA INTERFACE RAYFIELD --
+-- ==================================================================== --
+local Window = Rayfield:CreateWindow({
+    Name = "Torcidas 7",
+    LoadingTitle = "Carregando Framework Módulo...",
+    LoadingSubtitle = "by Assistant",
+    ConfigurationSaving = { Enabled = false },
+    KeySystem = true,
+    KeySettings = {
+        Title = "Torcidas 7 | Key System",
+        Subtitle = "Validação por Usuário (" .. LocalPlayer.Name .. ")",
+        Note = "Pegue sua Key no Discord: https://discord.gg/JS8WDGbus",
+        FileName = "Torcidas7KeyConfig",
+        SaveKey = true,
+        GrabKeyFromSite = false,
+        Key = ValidKeysForLocalPlayer
+    }
+})
+
+-- TAB 1: COMBAT
+local CombatTab = Window:CreateTab("Combat", 4483362458)
+
+CombatTab:CreateToggle({
+    Name = "Expandir Hitbox",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Hitbox.Enabled = Value
+    end
+})
+
+CombatTab:CreateSlider({
+    Name = "Tamanho da Hitbox",
+    Range = {2, 50},
+    Increment = 1,
+    CurrentValue = 2,
+    Callback = function(Value)
+        Modules.Hitbox.Size = Value
+    end
+})
+
+CombatTab:CreateSlider({
+    Name = "Transparência",
+    Range = {0, 1},
+    Increment = 0.1,
+    CurrentValue = 0.5,
+    Callback = function(Value)
+        Modules.Hitbox.Transparency = Value
+    end
+})
+
+CombatTab:CreateColorPicker({
+    Name = "Cor da Hitbox",
+    Color = Color3.fromRGB(255, 0, 0),
+    Callback = function(Value)
+        Modules.Hitbox.Color = Value
+    end
+})
+
+-- TAB 2: PLAYER
+local PlayerTab = Window:CreateTab("Player", 4483362458)
+
+PlayerTab:CreateSlider({
+    Name = "Velocidade (WalkSpeed)",
+    Range = {16, 250},
+    Increment = 1,
+    CurrentValue = 16,
+    Callback = function(Value)
+        Modules.Player.WalkSpeed = Value
+    end
+})
+
+PlayerTab:CreateSlider({
+    Name = "Pulo (JumpPower)",
+    Range = {50, 300},
+    Increment = 1,
+    CurrentValue = 50,
+    Callback = function(Value)
+        Modules.Player.JumpPower = Value
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Pulo Infinito",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Player.InfJump = Value
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Noclip (Atravessar Paredes)",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Player.Noclip = Value
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Auto Sprint",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Player.AutoSprint = Value
+    end
+})
+
+PlayerTab:CreateSlider({
+    Name = "Gravidade",
+    Range = {0, 500},
+    Increment = 5,
+    CurrentValue = 196,
+    Callback = function(Value)
+        Modules.Player.Gravity = Value
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "God Mode",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Defense.GodMode = Value
+        Notify("Proteção", Value and "God Mode Ativado" or "God Mode Desativado", 2)
+    end
+})
+
+PlayerTab:CreateToggle({
+    Name = "Sem Dano de Queda",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Defense.NoFallDamage = Value
+        Notify("Proteção", Value and "Sem Dano de Queda Ativado" or "Sem Dano de Queda Desativado", 2)
+    end
+})
+
+-- TAB 3: ESP
+local ESPTab = Window:CreateTab("ESP", 4483362458)
+
+ESPTab:CreateToggle({
+    Name = "Ativar ESP Geral",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.ESP.Enabled = Value
+    end
+})
+
+ESPTab:CreateToggle({
+    Name = "Chams (Wallhack)",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.ESP.Chams = Value
+        for _, p in ipairs(Players:GetPlayers()) do ApplyESP(p) end
+    end
+})
+
+ESPTab:CreateToggle({
+    Name = "Team Check (Apenas Inimigos)",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.ESP.TeamCheck = Value
+    end
+})
+
+-- TAB 4: TROLLS & TARGET
+local TrollTab = Window:CreateTab("Trolls", 4483362458)
+
+local TargetDropdown = TrollTab:CreateDropdown({
+    Name = "Selecionar Alvo",
+    Options = GetPlayerNames(),
+    CurrentOption = {""},
+    MultipleOptions = false,
+    Callback = function(Value)
+        Modules.Trolls.SelectedTarget = type(Value) == "table" and Value[1] or Value
+    end
+})
+
+TrollTab:CreateButton({
+    Name = "Atualizar Lista de Jogadores",
+    Callback = function()
+        TargetDropdown:Refresh(GetPlayerNames())
+    end
+})
+
+TrollTab:CreateToggle({
+    Name = "Spin (Girar Personagem)",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Trolls.Spin = Value
+    end
+})
+
+TrollTab:CreateSlider({
+    Name = "Velocidade do Spin",
+    Range = {10, 100},
+    Increment = 5,
+    CurrentValue = 30,
+    Callback = function(Value)
+        Modules.Trolls.SpinSpeed = Value
+    end
+})
+
+TrollTab:CreateToggle({
+    Name = "Loop TP no Alvo",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Trolls.LoopTP = Value
+    end
+})
+
+TrollTab:CreateToggle({
+    Name = "Sentar na Cabeça do Alvo",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Trolls.HeadSit = Value
+    end
+})
+
+-- TAB 5: DEFENSE & WAYPOINTS
+local DefenseTab = Window:CreateTab("Defesa / Teleport", 4483362458)
+
+DefenseTab:CreateToggle({
+    Name = "Auto Cura",
+    CurrentValue = false,
+    Callback = function(Value)
+        Modules.Defense.AutoHeal = Value
+    end
+})
+
+DefenseTab:CreateSlider({
+    Name = "Limite de Vida para Curar (%)",
+    Range = {10, 90},
+    Increment = 5,
+    CurrentValue = 50,
+    Callback = function(Value)
+        Modules.Defense.HealThreshold = Value
+    end
+})
+
+DefenseTab:CreateButton({
+    Name = "Salvar Posição Atual",
+    Callback = function()
+        local root = GetRoot()
+        if root then
+            Modules.Waypoints.SavedPosition = root.CFrame
+            Notify("Waypoint", "Posição salva com sucesso!", 2)
+        end
+    end
+})
+
+DefenseTab:CreateButton({
+    Name = "Teleportar para Posição Salva",
+    Callback = function()
+        local root = GetRoot()
+        if root and Modules.Waypoints.SavedPosition then
+            root.CFrame = Modules.Waypoints.SavedPosition
+            Notify("Waypoint", "Teleportado com sucesso!", 2)
+        else
+            Notify("Erro", "Nenhuma posição salva encontrada.", 2)
+        end
+    end
+})
+
+-- TAB 6: VISUALS
+local VisualTab = Window:CreateTab("Visuais", 4483362458)
+
+VisualTab:CreateSlider({
+    Name = "Campo de Visão (FOV)",
+    Range = {30, 120},
+    Increment = 1,
+    CurrentValue = 70,
+    Callback = function(Value)
+        Modules.Visual.FOV = Value
+    end
+})
+
+-- TAB 7: SETTINGS
+local SettingsTab = Window:CreateTab("Settings", 4483362458)
+
+SettingsTab:CreateToggle({
+    Name = "Notificações",
+    CurrentValue = Modules.Player.Notifications,
+    Callback = function(Value)
+        Modules.Player.Notifications = Value
+    end
+})
+
+SettingsTab:CreateButton({
+    Name = "Recarregar Interface",
+    Callback = function()
+        Notify("Settings", "Interface recarregada com sucesso!", 2)
+    end
+})
+
+SettingsTab:CreateButton({
+    Name = "Destruir Menu",
+    Callback = function()
+        Rayfield:Destroy()
+    end
+})
+
+SettingsTab:CreateParagraph({
+    Title = "Informações da Licença",
+    Content = "Usuário: " .. LocalPlayer.Name .. "\nValidade da Key: " .. LocalUserExpiration .. "\nVersão do Hub: Torcidas 7"
+})
+
+Notify("Torcidas 7", "Chave autenticada para " .. LocalPlayer.Name .. "!\nValidade: " .. LocalUserExpiration, 5)
