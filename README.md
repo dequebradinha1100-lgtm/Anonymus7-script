@@ -1,365 +1,671 @@
+-- ====================================================================
+-- INICIALIZAÇÃO DA BIBLIOTECA E SERVIÇOS
+-- ====================================================================
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
 local Workspace = game:GetService("Workspace")
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
-local LocalPlayer = Players.LocalPlayer or Players.PlayerAdded:Wait()
-local Camera = Workspace.CurrentCamera or Workspace:FindFirstChildOfClass("Camera")
 
-local Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))()
+local LocalPlayer = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
 
-local wdb = {
-    ["titeu-vip5"] = {User = "titeu9090900", Expires = "2026-08-27"},
-    ["SCRIPTVIP"] = {User = LocalPlayer.Name, Expires = "2026-12-31"},
-    ["KEY-nk"] = {User = "seraphisxC55", Expires = "2026-06-08"},
-    ["KEY-NOT5"] = {User = "menorkekeq1", Expires = "2026-08-08"},
-    ["KEY-BRYAN"] = {User = "Bryan900771", Expires = "2026-08-16"}
+-- ====================================================================
+-- SISTEMA DE KEY, WHITELIST E VALIDADE
+-- ====================================================================
+
+-- [CONFIGURAÇÃO DE KEYS LOCAIS]
+-- Adicione os usuários, keys e a data de expiração no formato "YYYY-MM-DD"
+local WhitelistDB = {
+["titeu-vip5"] = {User = "titeu9090900", Expires = "2026-08-27"},
+["SCRIPTVIP"] = {User = "RENAN_PEQUENO39", Expires = "2026-12-31"},
+["KEY-nk"] = {User = "seraphishXC55", Expires = "2026-08-08"},
+["KEY-NOT5"] = {User = "menorkeke1", Expires = "2026-08-08"},
+["KEY-BRYAN"] = {User = "Bryan900771", Expires = "2026-08-16"}
 }
 
-local rdb = ""
-if rdb ~= "" then
-    pcall(function()
-        local suc, res = pcall(function()
-            return HttpService:JSONDecode(game:HttpGet(rdb))
-        end)
-        if suc and type(res) == "table" then
-            wdb = res
-        end
-    end)
+-- [OPCIONAL: BANCO DE DADOS NA NUVEM]
+local RemoteDatabaseURL = ""
+
+if RemoteDatabaseURL ~= "" then
+local success, result = pcall(function()
+return HttpService:JSONDecode(game:HttpGet(RemoteDatabaseURL))
+end)
+if success and type(result) == "table" then
+WhitelistDB = result
+end
 end
 
-local function dt(ds)
-    local success, y, m, d = pcall(function()
-        return ds:match("(%d+)-(%d+)-(%d+)")
-    end)
-    if success and y and m and d then
-        return os.time({year = tonumber(y), month = tonumber(m), day = tonumber(d), hour = 23, min = 59, sec = 59})
-    end
-    return 0
+-- Função para converter "YYYY-MM-DD" em Timestamp Unix
+local function DateToTimestamp(dateStr)
+local year, month, day = dateStr:match("(%d+)-(%d+)-(%d+)")
+if year and month and day then
+return os.time({ year = tonumber(year), month = tonumber(month), day = tonumber(day), hour = 23, min = 59, sec = 59 })
+end
+return 0
 end
 
-local vk = {}
-local lex = "Undefined"
-for k, dt2 in pairs(wdb) do
-    if dt2 and dt2.User and dt2.Expires and string.lower(dt2.User) == string.lower(LocalPlayer.Name) then
-        local et = dt(dt2.Expires)
-        if os.time() <= et then
-            table.insert(vk, k)
-            lex = dt2.Expires
-        end
-    end
+-- Filtra apenas as keys válidas pertencentes ao jogador que está executando
+local ValidKeysForLocalPlayer = {}
+local LocalUserExpiration = "Indefinido"
+
+for key, data in pairs(WhitelistDB) do
+if string.lower(data.User) == string.lower(LocalPlayer.Name) then
+local expTimestamp = DateToTimestamp(data.Expires)
+if os.time() <= expTimestamp then
+table.insert(ValidKeysForLocalPlayer, key)
+LocalUserExpiration = data.Expires
+end
+end
 end
 
-if #vk == 0 then
-    table.insert(vk, "KEY_BLOQUEADOS_OU_EXPIRADOS_" .. math.random(100000, 999999))
+-- Se o jogador não tiver nenhuma key cadastrada ou válida
+if #ValidKeysForLocalPlayer == 0 then
+table.insert(ValidKeysForLocalPlayer, "KEY_BLOQUEADA_OU_EXPIRADA_" .. math.random(100000, 999999))
 end
 
-local mod = {
-    Connections = {},
-    OriginalSizes = {},
-    Hitbox = {Enabled = false, Size = 2, Color = Color3.fromRGB(255, 0, 0), Transparency = 0.5},
-    Player = {WalkSpeed = 16, JumpPower = 50, InfJump = false, Noclip = false, AutoStand = false, NoPlayerCollision = false, Notifications = true, AutoSprint = false, Gravity = 196.2, Scale = 1},
-    ESP = {Enabled = false, Box = false, Skeleton = false, Health = false, Tracers = false, Names = false, TeamCheck = false, Items = false, Chams = false},
-    Trolls = {Spin = false, SpinSpeed = 30, SelectedTarget = "", LoopTP = false, HeadSit = false, Invisible = false, Freeze = false},
-    Defense = {GodMode = false, AutoHeal = false, HealThreshold = 50, NoFallDamage = false},
-    Auto = {Farm = false, FarmTarget = "Coin", MacroRecording = false, MacroSequence = {}, MacroPlaying = false},
-    Visual = {FOV = 70},
-    Waypoints = {SavedPosition = nil}
+-- ====================================================================
+-- TABELA DE MÓDULOS DE ESTADO
+-- ====================================================================
+local Modules = {
+Connections = {},
+OriginalSizes = {},
+Hitbox = {
+Enabled = false,
+Size = 2,
+Color = Color3.fromRGB(255,0,0),
+Transparency = 0.5
+},
+Player = {
+WalkSpeed = 16,
+JumpPower = 50,
+InfJump = false,
+Noclip = false,
+AutoStand = false,
+NoPlayerCollision = false,
+Notifications = true,
+AutoSprint = false,
+Gravity = 196.2,
+Scale = 1
+},
+ESP = {
+Enabled = false,
+Box = false,
+Skeleton = false,
+Health = false,
+Tracers = false,
+Names = false,
+TeamCheck = false,
+Items = false,
+Chams = false
+},
+Trolls = {
+Spin = false,
+SpinSpeed = 30,
+SelectedTarget = "",
+LoopTP = false,
+HeadSit = false,
+Invisible = false,
+Freeze = false
+},
+Defense = {
+GodMode = false,
+AutoHeal = false,
+HealThreshold = 50,
+NoFallDamage = false
+},
+Auto = {
+Farm = false,
+FarmTarget = "Coin",
+MacroRecording = false,
+MacroSequence = {},
+MacroPlaying = false
+},
+Visual = {
+FOV = 70
+},
+Waypoints = {
+SavedPosition = nil
+}
 }
 
-local function nt(ti, co, du)
-    pcall(function()
-        if mod.Player.Notifications and Rayfield and Rayfield.Notify then
-            Rayfield:Notify({Title = ti, Content = co, Duration = du or 3, Image = 4483362458})
-        end
-    end)
+-- ====================================================================
+-- FUNÇÕES AUXILIARES E UTILITÁRIAS
+-- ====================================================================
+local function Notify(title, content, duration)
+if Modules.Player.Notifications then
+Rayfield:Notify({
+Title = title,
+Content = content,
+Duration = duration or 3,
+Image = 4483362458
+})
+end
 end
 
-local function gc(p)
-    p = p or LocalPlayer
-    return p.Character or p.CharacterAdded:Wait()
+local function GetCharacter(player)
+player = player or LocalPlayer
+return player.Character or player.CharacterAdded:Wait()
 end
 
-local function gr(p)
-    local ch = gc(p)
-    return ch and ch:FindFirstChild("HumanoidRootPart")
+local function GetRoot(player)
+local char = GetCharacter(player)
+return char and char:FindFirstChild("HumanoidRootPart")
 end
 
-local function ie(p)
-    if not mod.ESP.TeamCheck then return true end
-    return p.Team ~= LocalPlayer.Team
+local function IsEnemy(player)
+if not Modules.ESP.TeamCheck then
+return true
+end
+return player.Team ~= LocalPlayer.Team
 end
 
-local function gpn()
-    local ns = {}
-    for _, p2 in ipairs(Players:GetPlayers()) do
-        if p2 ~= LocalPlayer then
-            table.insert(ns, p2.Name)
-        end
-    end
-    if #ns == 0 then
-        table.insert(ns, "Nenhum")
-    end
-    return ns
+local function GetPlayerNames()
+local names = {}
+for _, p in ipairs(Players:GetPlayers()) do
+if p ~= LocalPlayer then
+table.insert(names, p.Name)
+end
+end
+return names
 end
 
-mod.Connections.InfJump = UserInputService.JumpRequest:Connect(function()
-    if mod.Player.InfJump then
-        local ch = gc()
-        local hum = ch and ch:FindFirstChildOfClass("Humanoid")
-        if hum then
-            hum:ChangeState(Enum.HumanoidStateType.Jumping)
-        end
-    end
+-- ====================================================================
+-- ESP / CHAMS MANAGEMENT (Definida antes de ser utilizada)
+-- ====================================================================
+local function ApplyESP(player)
+if player == LocalPlayer then return end
+
+local function UpdateHighlight()  
+    if not player.Character then return end  
+    local highlight = player.Character:FindFirstChild("ESPHighlight")  
+      
+    if Modules.ESP.Enabled and Modules.ESP.Chams and IsEnemy(player) then  
+        if not highlight then  
+            highlight = Instance.new("Highlight")  
+            highlight.Name = "ESPHighlight"  
+            highlight.Parent = player.Character  
+        end  
+        highlight.FillColor = Color3.fromRGB(255, 0, 0)  
+        highlight.OutlineColor = Color3.fromRGB(255, 255, 255)  
+        highlight.FillTransparency = 0.5  
+        highlight.OutlineTransparency = 0  
+        highlight.Enabled = true  
+    elseif highlight then  
+        highlight:Destroy()  
+    end  
+end  
+
+player.CharacterAdded:Connect(function()  
+    task.wait(0.5)  
+    UpdateHighlight()  
+end)  
+UpdateHighlight()
+
+end
+
+for _, p in ipairs(Players:GetPlayers()) do
+ApplyESP(p)
+end
+Players.PlayerAdded:Connect(ApplyESP)
+
+-- ====================================================================
+-- SISTEMA DE LOOPS E LÓGICA CORE
+-- ====================================================================
+
+-- Infinite Jump
+Modules.Connections.InfJump = UserInputService.JumpRequest:Connect(function()
+if Modules.Player.InfJump then
+local char = GetCharacter()
+local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+if humanoid then
+humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+end
+end
 end)
 
-local function sgm(ch)
-    if not ch then return end
-    local hum = ch:WaitForChild("Humanoid", 5)
-    if not hum then return end
-    hum.HealthChanged:Connect(function(h)
-        if mod.Defense.GodMode and h < hum.MaxHealth then
-            hum.Health = hum.MaxHealth
-        end
-    end)
-    hum.StateChanged:Connect(function(_, ns2)
-        if mod.Defense.GodMode and ns2 == Enum.HumanoidStateType.Dead then
-            hum:ChangeState(Enum.HumanoidStateType.GettingUp)
-            hum.Health = hum.MaxHealth
-        end
-    end)
+-- Sistema God Mode
+local function SetupGodMode(char)
+local humanoid = char:WaitForChild("Humanoid", 5)
+if not humanoid then return end
+
+humanoid.HealthChanged:Connect(function(health)  
+    if Modules.Defense.GodMode and health < humanoid.MaxHealth then  
+        humanoid.Health = humanoid.MaxHealth  
+    end  
+end)  
+
+humanoid.StateChanged:Connect(function(_, newState)  
+    if Modules.Defense.GodMode and newState == Enum.HumanoidStateType.Dead then  
+        humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)  
+        humanoid.Health = humanoid.MaxHealth  
+    end  
+end)
+
 end
 
-if LocalPlayer.Character then sgm(LocalPlayer.Character) end
-LocalPlayer.CharacterAdded:Connect(sgm)
+if LocalPlayer.Character then
+SetupGodMode(LocalPlayer.Character)
+end
+LocalPlayer.CharacterAdded:Connect(SetupGodMode)
 
+-- Loop Stepped
 RunService.Stepped:Connect(function()
-    local ch = LocalPlayer.Character
-    if not ch then return end
-    local hum = ch:FindFirstChildOfClass("Humanoid")
-    if mod.Player.Noclip then
-        for _, pt in ipairs(ch:GetDescendants()) do
-            if pt:IsA("BasePart") and pt.CanCollide then
-                pt.CanCollide = false
-            end
-        end
-    end
-    if mod.Player.AutoStand and hum and hum:GetState() == Enum.HumanoidStateType.Physics then
-        hum:ChangeState(Enum.HumanoidStateType.GettingUp)
-    end
-    if mod.Defense.NoFallDamage and hum then
-        local st = hum:GetState()
-        if st == Enum.HumanoidStateType.FallingDown or st == Enum.HumanoidStateType.Ragdoll then
-            hum:ChangeState(Enum.HumanoidStateType.Running)
-        end
-    end
-end)
+local char = LocalPlayer.Character
+if not char then return end
+local humanoid = char:FindFirstChildOfClass("Humanoid")
 
-RunService.RenderStepped:Connect(function()
-    local ch = LocalPlayer.Character
-    if not ch then return end
-    local rt = ch:FindFirstChild("HumanoidRootPart")
-    local hum = ch:FindFirstChildOfClass("Humanoid")
-    if hum then
-        hum.WalkSpeed = mod.Player.AutoSprint and (mod.Player.WalkSpeed * 1.5) or mod.Player.WalkSpeed
-        hum.UseJumpPower = true
-        hum.JumpPower = mod.Player.JumpPower
-    end
-    local currentCam = Workspace.CurrentCamera or Workspace:FindFirstChildOfClass("Camera")
-    if currentCam then
-        currentCam.FieldOfView = mod.Visual.FOV
-    end
-    Workspace.Gravity = mod.Player.Gravity
-    if mod.Trolls.Spin and rt then
-        rt.CFrame = rt.CFrame * CFrame.Angles(0, math.rad(mod.Trolls.SpinSpeed), 0)
-    end
-    if mod.Trolls.SelectedTarget ~= "" and mod.Trolls.SelectedTarget ~= "Nenhum" then
-        local tp = Players:FindFirstChild(mod.Trolls.SelectedTarget)
-        if tp and tp.Character then
-            local trt = tp.Character:FindFirstChild("HumanoidRootPart")
-            local th = tp.Character:FindFirstChild("Head")
-            if mod.Trolls.LoopTP and rt and trt then
-                rt.CFrame = trt.CFrame * CFrame.new(0, 0, 3)
-            elseif mod.Trolls.HeadSit and rt and th then
-                rt.CFrame = th.CFrame * CFrame.new(0, 1.5, 0)
-            end
-        end
-    end
-end)
+if Modules.Player.Noclip then  
+    for _, part in ipairs(char:GetDescendants()) do  
+        if part:IsA("BasePart") and part.CanCollide then  
+            part.CanCollide = false  
+        end  
+    end  
+end  
 
-task.spawn(function()
-    while task.wait(0.5) do
-        pcall(function()
-            for _, p in ipairs(Players:GetPlayers()) do
-                if p ~= LocalPlayer and p.Character then
-                    local hrp = p.Character:FindFirstChild("HumanoidRootPart")
-                    if hrp then
-                        if not mod.OriginalSizes[p] then
-                            mod.OriginalSizes[p] = {Size = hrp.Size, Transparency = hrp.Transparency}
-                        end
-                        if mod.Hitbox.Enabled and ie(p) then
-                            hrp.Size = Vector3.new(mod.Hitbox.Size, mod.Hitbox.Size, mod.Hitbox.Size)
-                            hrp.Transparency = mod.Hitbox.Transparency
-                            hrp.Color = mod.Hitbox.Color
-                            hrp.Material = Enum.Material.Neon
-                            hrp.CanCollide = false
-                        else
-                            if mod.OriginalSizes[p] then
-                                hrp.Size = mod.OriginalSizes[p].Size
-                                hrp.Transparency = mod.OriginalSizes[p].Transparency
-                            end
-                        end
-                    end
-                end
-            end
-        end)
-    end
-end)
+if Modules.Player.AutoStand and humanoid and humanoid:GetState() == Enum.HumanoidStateType.Physics then  
+    humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)  
+end  
 
-task.spawn(function()
-    while task.wait(1) do
-        pcall(function()
-            if mod.Defense.AutoHeal then
-                local ch = LocalPlayer.Character
-                local hum = ch and ch:FindFirstChildOfClass("Humanoid")
-                if hum and hum.Health < mod.Defense.HealThreshold then
-                    local tl = LocalPlayer.Backpack:FindFirstChild("Medkit") or ch:FindFirstChild("Medkit")
-                    if tl then
-                        tl.Parent = ch
-                        tl:Activate()
-                    end
-                end
-            end
-        end)
-    end
-end)
-
-local function ae(p)
-    if p == LocalPlayer then return end
-    local function uh()
-        pcall(function()
-            if not p.Character then return end
-            local hl = p.Character:FindFirstChild("ESPHighlighter")
-            if mod.ESP.Enabled and mod.ESP.Chams and ie(p) then
-                if not hl then
-                    hl = Instance.new("Highlight")
-                    hl.Name = "ESPHighlighter"
-                    hl.Parent = p.Character
-                end
-                hl.FillColor = Color3.fromRGB(255, 0, 0)
-                hl.OutlineColor = Color3.fromRGB(255, 255, 255)
-                hl.FillTransparency = 0.5
-                hl.OutlineTransparency = 0
-                hl.Enabled = true
-            elseif hl then
-                hl:Destroy()
-            end
-        end)
-    end
-    p.CharacterAdded:Connect(function()
-        task.wait(0.5)
-        uh()
-    end)
-    uh()
+if Modules.Defense.NoFallDamage and humanoid then  
+    local state = humanoid:GetState()  
+    if state == Enum.HumanoidStateType.FallingDown or state == Enum.HumanoidStateType.Ragdoll then  
+        humanoid:ChangeState(Enum.HumanoidStateType.Running)  
+    end  
 end
 
-for _, p2 in ipairs(Players:GetPlayers()) do ae(p2) end
-Players.PlayerAdded:Connect(ae)
+end)
 
-local win = Rayfield:CreateWindow({
-    Name = "Torcidas 7",
-    LoadingTitle = "Carregando Framework Módulo...",
-    LoadingSubtitle = "by Assistant",
-    ConfigurationSaving = {Enabled = false},
-    KeySystem = true,
-    KeySettings = {
-        Title = "Torcidas 7 | Key System",
-        Subtitle = "Validado por Usuário (" .. LocalPlayer.Name .. ")",
-        Note = "Pegue sua Key no Discord: https://discord.gg/JS8WDGbubs",
-        FileName = "Torcidas7KeyConfig",
-        SaveKey = true,
-        GrabKeyFromSite = false,
-        Key = vk
-    }
+-- Loop RenderStepped
+RunService.RenderStepped:Connect(function()
+local char = LocalPlayer.Character
+if not char then return end
+local root = char:FindFirstChild("HumanoidRootPart")
+local humanoid = char:FindFirstChildOfClass("Humanoid")
+
+if humanoid then  
+    humanoid.WalkSpeed = Modules.Player.AutoSprint and (Modules.Player.WalkSpeed * 1.5) or Modules.Player.WalkSpeed  
+    humanoid.UseJumpPower = true  
+    humanoid.JumpPower = Modules.Player.JumpPower  
+end  
+
+Camera.FieldOfView = Modules.Visual.FOV  
+Workspace.Gravity = Modules.Player.Gravity  
+
+if Modules.Trolls.Spin and root then  
+    root.CFrame = root.CFrame * CFrame.Angles(0, math.rad(Modules.Trolls.SpinSpeed), 0)  
+end  
+
+if Modules.Trolls.SelectedTarget ~= "" then  
+    local targetPlayer = Players:FindFirstChild(Modules.Trolls.SelectedTarget)  
+    if targetPlayer and targetPlayer.Character then  
+        local targetRoot = targetPlayer.Character:FindFirstChild("HumanoidRootPart")  
+        local targetHead = targetPlayer.Character:FindFirstChild("Head")  
+
+        if Modules.Trolls.LoopTP and root and targetRoot then  
+            root.CFrame = targetRoot.CFrame * CFrame.new(0, 0, 3)  
+        elseif Modules.Trolls.HeadSit and root and targetHead then  
+            root.CFrame = targetHead.CFrame * CFrame.new(0, 1.5, 0)  
+        end  
+    end  
+end
+
+end)
+
+-- Hitbox Expander Loop
+task.spawn(function()
+while task.wait(0.5) do
+for _, player in ipairs(Players:GetPlayers()) do
+if player ~= LocalPlayer and player.Character then
+local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+if hrp then
+if not Modules.OriginalSizes[player] then
+Modules.OriginalSizes[player] = { Size = hrp.Size, Transparency = hrp.Transparency }
+end
+
+if Modules.Hitbox.Enabled and IsEnemy(player) then  
+                    hrp.Size = Vector3.new(Modules.Hitbox.Size, Modules.Hitbox.Size, Modules.Hitbox.Size)  
+                    hrp.Transparency = Modules.Hitbox.Transparency  
+                    hrp.Color = Modules.Hitbox.Color  
+                    hrp.Material = Enum.Material.Neon  
+                    hrp.CanCollide = false  
+                else  
+                    if Modules.OriginalSizes[player] then  
+                        hrp.Size = Modules.OriginalSizes[player].Size  
+                        hrp.Transparency = Modules.OriginalSizes[player].Transparency  
+                    end  
+                end  
+            end  
+        end  
+    end  
+end
+
+end)
+
+-- Auto Heal Loop
+task.spawn(function()
+while task.wait(1) do
+if Modules.Defense.AutoHeal then
+local char = LocalPlayer.Character
+local humanoid = char and char:FindFirstChildOfClass("Humanoid")
+if humanoid and humanoid.Health < Modules.Defense.HealThreshold then
+local tool = LocalPlayer.Backpack:FindFirstChild("Medkit") or char:FindFirstChild("Medkit")
+if tool then
+tool.Parent = char
+tool:Activate()
+end
+end
+end
+end
+end)
+
+-- ====================================================================
+-- CRIAÇÃO DA INTERFACE RAYFIELD (SISTEMA DE KEY NATIVO E DINÂMICO)
+-- ====================================================================
+local Window = Rayfield:CreateWindow({
+Name = "Torcidas 7",
+LoadingTitle = "Carregando Framework Módulo...",
+LoadingSubtitle = "by Assistant",
+ConfigurationSaving = { Enabled = false },
+KeySystem = true,
+KeySettings = {
+Title = "Torcidas 7 | Key System",
+Subtitle = "Validação por Usuário (" .. LocalPlayer.Name .. ")",
+Note = "Pegue sua Key no Discord: https://discord.gg/JS8WDGbus",
+FileName = "Torcidas7KeyConfig",
+SaveKey = true,
+GrabKeyFromSite = false,
+Key = ValidKeysForLocalPlayer
+}
 })
 
-local ct = win:CreateTab("Combate", 4483362458)
-ct:CreateToggle({Name = "Expandir Hitbox", CurrentValue = false, Callback = function(v) mod.Hitbox.Enabled = v end})
-ct:CreateSlider({Name = "Tamanho do Hitbox", Range = {2, 50}, Increment = 1, CurrentValue = 2, Callback = function(v) mod.Hitbox.Size = v end})
-ct:CreateSlider({Name = "Transparência", Range = {0, 1}, Increment = 0.1, CurrentValue = 0.5, Callback = function(v) mod.Hitbox.Transparency = v end})
-ct:CreateColorPicker({Name = "Cor do Hitbox", Color = Color3.fromRGB(255, 0, 0), Callback = function(v) mod.Hitbox.Color = v end})
+-- TAB 1: COMBAT
+local CombatTab = Window:CreateTab("Combat", 4483362458)
 
-local ptab = win:CreateTab("Player", 4483362458)
-ptab:CreateSlider({Name = "Velocidade (WalkSpeed)", Range = {16, 250}, Increment = 1, CurrentValue = 16, Callback = function(v) mod.Player.WalkSpeed = v end})
-ptab:CreateSlider({Name = "Pulo (JumpPower)", Range = {50, 300}, Increment = 1, CurrentValue = 50, Callback = function(v) mod.Player.JumpPower = v end})
-ptab:CreateToggle({Name = "Pulo Infinito", CurrentValue = false, Callback = function(v) mod.Player.InfJump = v end})
-ptab:CreateToggle({Name = "Noclip (Atravesse Paredes)", CurrentValue = false, Callback = function(v) mod.Player.Noclip = v end})
-ptab:CreateToggle({Name = "Auto Sprint", CurrentValue = false, Callback = function(v) mod.Player.AutoSprint = v end})
-ptab:CreateSlider({Name = "Gravidade", Range = {0, 500}, Increment = 5, CurrentValue = 196, Callback = function(v) mod.Player.Gravity = v end})
-ptab:CreateToggle({Name = "God Mode", CurrentValue = false, Callback = function(v)
-    mod.Defense.GodMode = v
-    nt("Proteção", v and "God Mode Ativado" or "God Mode Desativado", 2)
-end})
-ptab:CreateToggle({Name = "Sem Dano de Queda", CurrentValue = false, Callback = function(v)
-    mod.Defense.NoFallDamage = v
-    nt("Proteção", v and "Sem Dano de Queda Ativado" or "Sem Dano de Queda Desativado", 2)
-end})
-
-local espt = win:CreateTab("ESP", 4483362458)
-espt:CreateToggle({Name = "Ativar ESP Geral", CurrentValue = false, Callback = function(v) mod.ESP.Enabled = v end})
-espt:CreateToggle({Name = "Chams (Wallhack)", CurrentValue = false, Callback = function(v)
-    mod.ESP.Chams = v
-    for _, p2 in ipairs(Players:GetPlayers()) do
-        ae(p2)
-    end
-end})
-espt:CreateToggle({Name = "Team Check (Apenas Inimigos)", CurrentValue = false, Callback = function(v) mod.ESP.TeamCheck = v end})
-
-local ttab = win:CreateTab("Trolls", 4483362458)
-local tdd = ttab:CreateDropdown({
-    Name = "Selecionar Alvo",
-    Options = gpn(),
-    CurrentOption = {"Nenhum"},
-    MultipleOptions = false,
-    Callback = function(v)
-        local val = type(v) == "table" and v[1] or v
-        mod.Trolls.SelectedTarget = (val == "Nenhum") and "" or val
-    end
+CombatTab:CreateToggle({
+Name = "Expandir Hitbox",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Hitbox.Enabled = Value
+end
 })
-ttab:CreateButton({Name = "Atualizar Lista de Jogadores", Callback = function() tdd:Refresh(gpn()) end})
-ttab:CreateToggle({Name = "Spin (Girar Personagem)", CurrentValue = false, Callback = function(v) mod.Trolls.Spin = v end})
-ttab:CreateSlider({Name = "Velocidade do Spin", Range = {10, 100}, Increment = 5, CurrentValue = 30, Callback = function(v) mod.Trolls.SpinSpeed = v end})
-ttab:CreateToggle({Name = "Loop TP no Alvo", CurrentValue = false, Callback = function(v) mod.Trolls.LoopTP = v end})
-ttab:CreateToggle({Name = "Sentar na Cabeça do Alvo", CurrentValue = false, Callback = function(v) mod.Trolls.HeadSit = v end})
 
-local dtab = win:CreateTab("Defesa / Teleport", 4483362458)
-dtab:CreateToggle({Name = "Auto Cura", CurrentValue = false, Callback = function(v) mod.Defense.AutoHeal = v end})
-dtab:CreateSlider({Name = "Limite de Vida para Curar (%)", Range = {10, 90}, Increment = 5, CurrentValue = 50, Callback = function(v) mod.Defense.HealThreshold = v end})
-dtab:CreateButton({Name = "Salvar Posição Atual", Callback = function()
-    local rt = gr()
-    if rt then
-        mod.Waypoints.SavedPosition = rt.CFrame
-        nt("Waypoint", "Posição salva com sucesso!", 2)
-    end
-end})
-dtab:CreateButton({Name = "Teleportar para Posição Salva", Callback = function()
-    local rt = gr()
-    if rt and mod.Waypoints.SavedPosition then
-        rt.CFrame = mod.Waypoints.SavedPosition
-        nt("Waypoint", "Teleportado com sucesso!", 2)
-    else
-        nt("Erro", "Nenhuma posição salva encontrada.", 2)
-    end
-end})
+CombatTab:CreateSlider({
+Name = "Tamanho da Hitbox",
+Range = {2, 50},
+Increment = 1,
+CurrentValue = 2,
+Callback = function(Value)
+Modules.Hitbox.Size = Value
+end
+})
 
-local vtab = win:CreateTab("Visuals", 4483362458)
-vtab:CreateSlider({Name = "Campo de Visão (FOV)", Range = {30, 120}, Increment = 1, CurrentValue = 70, Callback = function(v) mod.Visual.FOV = v end})
+CombatTab:CreateSlider({
+Name = "Transparência",
+Range = {0, 1},
+Increment = 0.1,
+CurrentValue = 0.5,
+Callback = function(Value)
+Modules.Hitbox.Transparency = Value
+end
+})
 
-local stab = win:CreateTab("Settings", 4483362458)
-stab:CreateToggle({Name = "Notificações", CurrentValue = mod.Player.Notifications, Callback = function(v) mod.Player.Notifications = v end})
-stab:CreateButton({Name = "Recarregar Interferências", Callback = function() nt("Settings", "Interferências registradas com sucesso!", 2) end})
-stab:CreateButton({Name = "Destruir Menu", Callback = function() Rayfield:Destroy() end})
-stab:CreateParagraph({Title = "Informações da Licença", Content = "Usuário: " .. LocalPlayer.Name .. "\nValidade de Key: " .. lex .. "\nVersão do Hub: Torcidas 7"})
+CombatTab:CreateColorPicker({
+Name = "Cor da Hitbox",
+Color = Color3.fromRGB(255, 0, 0),
+Callback = function(Value)
+Modules.Hitbox.Color = Value
+end
+})
 
-nt("Torcidas 7", "Chave autenticada por - " .. LocalPlayer.Name .. "!\nValidade: " .. lex, 5)
+-- TAB 2: PLAYER
+local PlayerTab = Window:CreateTab("Player", 4483362458)
+
+PlayerTab:CreateSlider({
+Name = "Velocidade (WalkSpeed)",
+Range = {16, 250},
+Increment = 1,
+CurrentValue = 16,
+Callback = function(Value)
+Modules.Player.WalkSpeed = Value
+end
+})
+
+PlayerTab:CreateSlider({
+Name = "Pulo (JumpPower)",
+Range = {50, 300},
+Increment = 1,
+CurrentValue = 50,
+Callback = function(Value)
+Modules.Player.JumpPower = Value
+end
+})
+
+PlayerTab:CreateToggle({
+Name = "Pulo Infinito",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Player.InfJump = Value
+end
+})
+
+PlayerTab:CreateToggle({
+Name = "Noclip (Atravessar Paredes)",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Player.Noclip = Value
+end
+})
+
+PlayerTab:CreateToggle({
+Name = "Auto Sprint",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Player.AutoSprint = Value
+end
+})
+
+PlayerTab:CreateSlider({
+Name = "Gravidade",
+Range = {0, 500},
+Increment = 5,
+CurrentValue = 196,
+Callback = function(Value)
+Modules.Player.Gravity = Value
+end
+})
+
+PlayerTab:CreateToggle({
+Name = "God Mode",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Defense.GodMode = Value
+Notify("Proteção", Value and "God Mode Ativado" or "God Mode Desativado", 2)
+end
+})
+
+PlayerTab:CreateToggle({
+Name = "Sem Dano de Queda",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Defense.NoFallDamage = Value
+Notify("Proteção", Value and "Sem Dano de Queda Ativado" or "Sem Dano de Queda Desativado", 2)
+end
+})
+
+-- TAB 3: ESP
+local ESPTab = Window:CreateTab("ESP", 4483362458)
+
+ESPTab:CreateToggle({
+Name = "Ativar ESP Geral",
+CurrentValue = false,
+Callback = function(Value)
+Modules.ESP.Enabled = Value
+end
+})
+
+ESPTab:CreateToggle({
+Name = "Chams (Wallhack)",
+CurrentValue = false,
+Callback = function(Value)
+Modules.ESP.Chams = Value
+for _, p in ipairs(Players:GetPlayers()) do
+ApplyESP(p)
+end
+end
+})
+
+ESPTab:CreateToggle({
+Name = "Team Check (Apenas Inimigos)",
+CurrentValue = false,
+Callback = function(Value)
+Modules.ESP.TeamCheck = Value
+end
+})
+
+-- TAB 4: TROLLS & TARGET
+local TrollTab = Window:CreateTab("Trolls", 4483362458)
+
+local TargetDropdown = TrollTab:CreateDropdown({
+Name = "Selecionar Alvo",
+Options = GetPlayerNames(),
+CurrentOption = {""},
+MultipleOptions = false,
+Callback = function(Value)
+Modules.Trolls.SelectedTarget = type(Value) == "table" and Value[1] or Value
+end
+})
+
+TrollTab:CreateButton({
+Name = "Atualizar Lista de Jogadores",
+Callback = function()
+TargetDropdown:Refresh(GetPlayerNames())
+end
+})
+
+TrollTab:CreateToggle({
+Name = "Spin (Girar Personagem)",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Trolls.Spin = Value
+end
+})
+
+TrollTab:CreateSlider({
+Name = "Velocidade do Spin",
+Range = {10, 100},
+Increment = 5,
+CurrentValue = 30,
+Callback = function(Value)
+Modules.Trolls.SpinSpeed = Value
+end
+})
+
+TrollTab:CreateToggle({
+Name = "Loop TP no Alvo",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Trolls.LoopTP = Value
+end
+})
+
+TrollTab:CreateToggle({
+Name = "Sentar na Cabeça do Alvo",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Trolls.HeadSit = Value
+end
+})
+
+-- TAB 5: DEFENSE & WAYPOINTS
+local DefenseTab = Window:CreateTab("Defesa / Teleport", 4483362458)
+
+DefenseTab:CreateToggle({
+Name = "Auto Cura",
+CurrentValue = false,
+Callback = function(Value)
+Modules.Defense.AutoHeal = Value
+end
+})
+
+DefenseTab:CreateSlider({
+Name = "Limite de Vida para Curar (%)",
+Range = {10, 90},
+Increment = 5,
+CurrentValue = 50,
+Callback = function(Value)
+Modules.Defense.HealThreshold = Value
+end
+})
+
+DefenseTab:CreateButton({
+Name = "Salvar Posição Atual",
+Callback = function()
+local root = GetRoot()
+if root then
+Modules.Waypoints.SavedPosition = root.CFrame
+Notify("Waypoint", "Posição salva com sucesso!", 2)
+end
+end
+})
+
+DefenseTab:CreateButton({
+Name = "Teleportar para Posição Salva",
+Callback = function()
+local root = GetRoot()
+if root and Modules.Waypoints.SavedPosition then
+root.CFrame = Modules.Waypoints.SavedPosition
+Notify("Waypoint", "Teleportado com sucesso!", 2)
+else
+Notify("Erro", "Nenhuma posição salva encontrada.", 2)
+end
+end
+})
+
+-- TAB 6: VISUAIS
+local VisualTab = Window:CreateTab("Visuais", 4483362458)
+
+VisualTab:CreateSlider({
+Name = "Campo de Visão (FOV)",
+Range = {30, 120},
+Increment = 1,
+CurrentValue = 70,
+Callback = function(Value)
+Modules.Visual.FOV = Value
+end
+})
+
+-- TAB 7: SETTINGS
+local SettingsTab = Window:CreateTab("Settings", 4483362458)
+
+SettingsTab:CreateToggle({
+Name = "Notificações",
+CurrentValue = Modules.Player.Notifications,
+Callback = function(Value)
+Modules.Player.Notifications = Value
+end
+})
+
+SettingsTab:CreateButton({
+Name = "Recarregar Interface",
+Callback = function()
+Notify("Settings", "Interface recarregada com sucesso!", 2)
+end
+})
+
+SettingsTab:CreateButton({
+Name = "Destruir Menu",
+Callback = function()
+Rayfield:Destroy()
+end
+})
+
+SettingsTab:CreateParagraph({
+Title = "Informações da Licença",
+Content = "Usuário: " .. LocalPlayer.Name .. "\nValidade da Key: " .. LocalUserExpiration .. "\nVersão do Hub: Torcidas 7"
+})
+
+Notify("Torcidas 7", "Chave autenticada para " .. LocalPlayer.Name .. "!\nValidade: " .. LocalUserExpiration, 5)
