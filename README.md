@@ -22,8 +22,8 @@ local Camera = Workspace.CurrentCamera
 local WhitelistDB = {
     ["KEY-MK-7"]     = { User = "mWKAAdaJSKp", Expires = "2026-8-11" },
     ["KEY-RIP-7"]       = { User = "rip_madraknho", Expires = "2026-8-12" },
-    ["KEY-EXEMPLO"]      = { User =
-"OutroJogador123", Expires = "2026-08-15" },
+    ["KEY-SORRISO-7"]      = { User =
+"rip_money978", Expires = "2026-08-24" },
     ["key-00"]           = { User = "RENAN_PEQUENO39", Expires = "2026-12-31" }
 }
 
