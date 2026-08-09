@@ -21,8 +21,9 @@ local Camera = Workspace.CurrentCamera
 -- Adicione os usuários, keys e a data de expiração no formato "YYYY-MM-DD"
 local WhitelistDB = {
     ["KEY-MK-7"]     = { User = "mWKAAdaJSKp", Expires = "2026-8-11" },
-    ["SCRIPT7VIP"]       = { User = LocalPlayer.Name, Expires = "2026-12-31" }, -- Sua key pessoal para testes
-    ["KEY-EXEMPLO"]      = { User = "OutroJogador123", Expires = "2026-08-15" },
+    ["KEY-RIP-7"]       = { User = "rip_madraknho", Expires = "2026-8-12" },
+    ["KEY-EXEMPLO"]      = { User =
+"OutroJogador123", Expires = "2026-08-15" },
     ["key-00"]           = { User = "RENAN_PEQUENO39", Expires = "2026-12-31" }
 }
 
