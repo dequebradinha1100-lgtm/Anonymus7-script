@@ -23,7 +23,7 @@ local WhitelistDB = {
     ["KEY-MEN-7"]  = { User = "roblox_user_2657397776", Expires = "2026-8-12" },
     ["KEY-MS-7"] = { User = "Ramalho3214", Expires = "2026-8-24" },
     ["KEY-DJ-7"]  = { User = "Djdjfhrhdbejgbt", Expires = "2026-08-24" },
-    ["key-rx7"]   = { User = "teteu9090900", Expires = "2026-8-20" },
+    ["key-savage"]   = { User = "Savage_9976", Expires = "2026-8-14" },
     ["PH-VIP-7"]  = { User = "Phzim_485", Expires = "2026-08-24" }
 }
 
