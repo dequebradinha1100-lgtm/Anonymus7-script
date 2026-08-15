@@ -25,6 +25,7 @@ local WhitelistDB = {
     ["KEY-DJ-7"]  = { User = "Djdjfhrhdbejgbt", Expires = "2026-08-24" },
     ["key-savage"]   = { User = "Savage_9976", Expires = "2026-8-14" },
     ["key-ghost"]   = { User = "ghost03615", Expires = "2026-8-15" },
+    .["key-1dia"]   = { User = "Arthurluz2330", Expires = "2026-8-15" },
     ["PH-VIP-7"]  = { User = "Phzim_485", Expires = "2026-08-24" }
 }
 
