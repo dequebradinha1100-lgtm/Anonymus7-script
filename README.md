@@ -20,7 +20,7 @@ local Camera = Workspace.CurrentCamera
 -- [CONFIGURAÇÃO DE KEYS LOCAIS]
 -- Adicione os usuários, keys e a data de expiração no formato "YYYY-MM-DD"
 local WhitelistDB = {
-    ["KEY-MK-7"]  = { User = "mWKAAdaJSKp", Expires = "2026-8-11" },
+    ["KEY-7"]  = { User = "Johnder287", Expires = "2026-8-120" },
     ["KEY-ARTHUR-7"] = { User = "Arthurluz2330", Expires = "2026-8-16" },
     ["KEY-DJ-7"]  = { User = "Djdjfhrhdbejgbt", Expires = "2026-08-24" },
     ["key-rx7"]   = { User = "teteu9090900", Expires = "2026-8-20" },
