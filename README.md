@@ -24,7 +24,7 @@ local WhitelistDB = {
     ["DOCE-7"] = { User = "Gauhziwhd", Expires = "2026-8-20" },
     ["KEY-DJ-7"]  = { User = "Djdjfhrhdbejgbt", Expires = "2026-08-24" },
     ["key-rx7"]   = { User = "teteu9090900", Expires = "2026-8-20" },
-    ["PH-VIP-7"]  = { User = "Phzim_485", Expires = "2026-08-24" }
+    ["KEY-marcelloestouraboca-7"]  = { User = "marcelloprimegym", Expires = "2026-08-24" }
 }
 
 -- [OPCIONAL: BANCO DE DADOS NA NUVEM]
